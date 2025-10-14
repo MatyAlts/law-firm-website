@@ -36,10 +36,10 @@ export function Footer() {
                   </a>
                   {" / "}
                   <a
-                    href="mailto:patriciaelibelmonte@gmail.com"
+                    href="mailto:belmonteeliana@gmail.com"
                     className="hover:text-secondary-foreground transition-colors"
                   >
-                    patriciaelibelmonte@gmail.com
+                    belmonteeliana@gmail.com
                   </a>
                 </div>
               </div>

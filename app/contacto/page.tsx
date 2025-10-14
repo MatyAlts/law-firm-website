@@ -172,10 +172,10 @@ export default function ContactoPage() {
                         natal00203@gmail.com
                       </a>
                       <a
-                        href="mailto:patriciaelibelmonte@gmail.com"
+                        href="mailto:belmonteeliana@gmail.com"
                         className="block text-card-foreground hover:text-foreground transition-colors"
                       >
-                        patriciaelibelmonte@gmail.com
+                        belmonteeliana@gmail.com
                       </a>
                     </div>
                   </div>
@@ -244,10 +244,10 @@ export default function ContactoPage() {
                   </div>
                   <div className="space-y-2">
                     <p className="text-card-foreground">
-                      <span className="font-semibold text-foreground">Lunes a Viernes:</span> 9:00 - 18:00
+                      <span className="font-semibold text-foreground">Lunes a Viernes:</span> 9:00 - 20:00
                     </p>
                     <p className="text-card-foreground">
-                      <span className="font-semibold text-foreground">Sábados:</span> Con turno previo
+                      <span className="font-semibold text-foreground">Sábados:</span> Con cita previa
                     </p>
                   </div>
                 </div>
