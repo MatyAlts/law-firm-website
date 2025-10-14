@@ -4,6 +4,7 @@ import Link from "next/link"
 import { useState } from "react"
 import { Menu, X } from "lucide-react"
 import { usePathname } from "next/navigation"
+import Image from "next/image"
 
 export function Navigation() {
   const [isOpen, setIsOpen] = useState(false)
@@ -22,10 +23,18 @@ export function Navigation() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
           {/* Logo */}
-          <Link href="/" className="flex-shrink-0">
+          <Link href="/" className="flex-shrink-0 flex items-center gap-3">
             <h1 className="text-xl sm:text-2xl font-serif font-bold text-foreground transition-transform hover:scale-105">
               BLS
             </h1>
+            <div className="h-12 w-px bg-border" />
+            <Image
+              src="/images/colegio-abogados-logo.jpg"
+              alt="Colegio de Abogados Rawson"
+              width={48}
+              height={48}
+              className="h-12 w-auto opacity-80 hover:opacity-100 transition-opacity"
+            />
           </Link>
 
           {/* Desktop Navigation */}
