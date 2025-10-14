@@ -29,7 +29,7 @@ export function Navigation() {
             </h1>
             <div className="h-12 w-px bg-border" />
             <Image
-              src="/images/colegio-abogados-logo.jpg"
+              src="/images/colegio-abogados-logo.svg"
               alt="Colegio de Abogados Rawson"
               width={48}
               height={48}
