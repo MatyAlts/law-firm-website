@@ -147,7 +147,14 @@ export default function ContactoPage() {
                   </div>
                   <div>
                     <h3 className="font-semibold text-foreground mb-1">Dirección</h3>
-                    <p className="text-card-foreground">Mendoza, Argentina</p>
+                    <a
+                      href="https://maps.app.goo.gl/rDQTN6ar1A1jaz2n7"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-card-foreground hover:text-foreground transition-colors"
+                    >
+                      Colon 165 4° Piso Oficina A, Ciudad, Mendoza, Argentina
+                    </a>
                   </div>
                 </div>
 
@@ -157,12 +164,20 @@ export default function ContactoPage() {
                   </div>
                   <div>
                     <h3 className="font-semibold text-foreground mb-1">Email</h3>
-                    <a
-                      href="mailto:contacto@blsestudio.com.ar"
-                      className="text-card-foreground hover:text-foreground transition-colors"
-                    >
-                      contacto@blsestudio.com.ar
-                    </a>
+                    <div className="space-y-1">
+                      <a
+                        href="mailto:natal00203@gmail.com"
+                        className="block text-card-foreground hover:text-foreground transition-colors"
+                      >
+                        natal00203@gmail.com
+                      </a>
+                      <a
+                        href="mailto:patriciaelibelmonte@gmail.com"
+                        className="block text-card-foreground hover:text-foreground transition-colors"
+                      >
+                        patriciaelibelmonte@gmail.com
+                      </a>
+                    </div>
                   </div>
                 </div>
 
@@ -172,12 +187,20 @@ export default function ContactoPage() {
                   </div>
                   <div>
                     <h3 className="font-semibold text-foreground mb-1">Teléfono</h3>
-                    <a
-                      href="tel:+542614000000"
-                      className="text-card-foreground hover:text-foreground transition-colors"
-                    >
-                      +54 261 400 0000
-                    </a>
+                    <div className="space-y-1">
+                      <a
+                        href="tel:+542612071333"
+                        className="block text-card-foreground hover:text-foreground transition-colors"
+                      >
+                        +54 261 207 1333
+                      </a>
+                      <a
+                        href="tel:+542612712200"
+                        className="block text-card-foreground hover:text-foreground transition-colors"
+                      >
+                        +54 261 271 2200
+                      </a>
+                    </div>
                   </div>
                 </div>
 
@@ -187,14 +210,24 @@ export default function ContactoPage() {
                   </div>
                   <div>
                     <h3 className="font-semibold text-foreground mb-1">WhatsApp</h3>
-                    <a
-                      href="https://wa.me/5492614000000"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-card-foreground hover:text-foreground transition-colors"
-                    >
-                      +54 9 261 400 0000
-                    </a>
+                    <div className="space-y-1">
+                      <a
+                        href="https://wa.me/542612071333"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="block text-card-foreground hover:text-foreground transition-colors"
+                      >
+                        +54 261 207 1333
+                      </a>
+                      <a
+                        href="https://wa.me/542612712200"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="block text-card-foreground hover:text-foreground transition-colors"
+                      >
+                        +54 261 271 2200
+                      </a>
+                    </div>
                   </div>
                 </div>
               </CardContent>

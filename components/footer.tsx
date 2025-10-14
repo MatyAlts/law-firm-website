@@ -19,36 +19,63 @@ export function Footer() {
             <div className="space-y-3">
               <div className="flex items-start gap-3">
                 <MapPin size={18} className="mt-1 flex-shrink-0" />
-                <p className="text-sm text-secondary-foreground/80">Mendoza, Argentina</p>
-              </div>
-              <div className="flex items-center gap-3">
-                <Mail size={18} className="flex-shrink-0" />
                 <a
-                  href="mailto:contacto@blsestudio.com.ar"
-                  className="text-sm text-secondary-foreground/80 hover:text-secondary-foreground transition-colors"
-                >
-                  contacto@blsestudio.com.ar
-                </a>
-              </div>
-              <div className="flex items-center gap-3">
-                <Phone size={18} className="flex-shrink-0" />
-                <a
-                  href="tel:+542614000000"
-                  className="text-sm text-secondary-foreground/80 hover:text-secondary-foreground transition-colors"
-                >
-                  +54 261 400 0000
-                </a>
-              </div>
-              <div className="flex items-center gap-3">
-                <MessageCircle size={18} className="flex-shrink-0" />
-                <a
-                  href="https://wa.me/5492614000000"
+                  href="https://maps.app.goo.gl/rDQTN6ar1A1jaz2n7"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-sm text-secondary-foreground/80 hover:text-secondary-foreground transition-colors"
                 >
-                  WhatsApp
+                  Colon 165 4° Piso Oficina A, Ciudad, Mendoza, Argentina
                 </a>
+              </div>
+              <div className="flex items-center gap-3">
+                <Mail size={18} className="flex-shrink-0" />
+                <div className="text-sm text-secondary-foreground/80">
+                  <a href="mailto:natal00203@gmail.com" className="hover:text-secondary-foreground transition-colors">
+                    natal00203@gmail.com
+                  </a>
+                  {" / "}
+                  <a
+                    href="mailto:patriciaelibelmonte@gmail.com"
+                    className="hover:text-secondary-foreground transition-colors"
+                  >
+                    patriciaelibelmonte@gmail.com
+                  </a>
+                </div>
+              </div>
+              <div className="flex items-center gap-3">
+                <Phone size={18} className="flex-shrink-0" />
+                <div className="text-sm text-secondary-foreground/80">
+                  <a href="tel:+542612071333" className="hover:text-secondary-foreground transition-colors">
+                    +54 261 207 1333
+                  </a>
+                  {" / "}
+                  <a href="tel:+542612712200" className="hover:text-secondary-foreground transition-colors">
+                    +54 261 271 2200
+                  </a>
+                </div>
+              </div>
+              <div className="flex items-center gap-3">
+                <MessageCircle size={18} className="flex-shrink-0" />
+                <div className="text-sm text-secondary-foreground/80">
+                  <a
+                    href="https://wa.me/542612071333"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:text-secondary-foreground transition-colors"
+                  >
+                    Lucero Salafia
+                  </a>
+                  {" / "}
+                  <a
+                    href="https://wa.me/542612712200"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:text-secondary-foreground transition-colors"
+                  >
+                    Belmonte
+                  </a>
+                </div>
               </div>
             </div>
           </div>
