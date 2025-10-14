@@ -2,6 +2,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Scale, Users, Car, Heart, FileText, Briefcase, Home, Shield } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
+import { ScrollReveal } from "@/components/scroll-reveal"
 
 export default function AreasPage() {
   const practiceAreas = [
@@ -76,54 +77,62 @@ export default function AreasPage() {
   return (
     <main className="py-16 sm:py-20">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="max-w-3xl mx-auto text-center mb-12">
-          <h1 className="text-4xl sm:text-5xl font-serif font-bold text-foreground mb-6">Áreas de Práctica</h1>
-          <p className="text-lg text-card-foreground leading-relaxed">
-            Ofrecemos servicios legales especializados en diversas áreas del derecho, con un enfoque personalizado y
-            orientado a resultados.
-          </p>
-        </div>
+        <ScrollReveal>
+          <div className="max-w-3xl mx-auto text-center mb-12">
+            <h1 className="text-4xl sm:text-5xl font-serif font-bold text-foreground mb-6">Áreas de Práctica</h1>
+            <p className="text-lg text-card-foreground leading-relaxed">
+              Ofrecemos servicios legales especializados en diversas áreas del derecho, con un enfoque personalizado y
+              orientado a resultados.
+            </p>
+          </div>
+        </ScrollReveal>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 mb-12">
           {practiceAreas.map((area, index) => {
             const Icon = area.icon
             return (
-              <Card key={index} className="border-border hover:shadow-lg transition-shadow bg-card">
-                <CardHeader>
-                  <div className="w-14 h-14 rounded-full bg-muted flex items-center justify-center mb-4">
-                    <Icon className="w-7 h-7 text-secondary" />
-                  </div>
-                  <CardTitle className="text-2xl font-serif text-foreground mb-2">{area.title}</CardTitle>
-                  <CardDescription className="text-card-foreground leading-relaxed text-base">
-                    {area.description}
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <h4 className="font-semibold text-foreground mb-3">Servicios incluidos:</h4>
-                  <ul className="space-y-2">
-                    {area.services.map((service, idx) => (
-                      <li key={idx} className="flex items-start gap-2 text-card-foreground">
-                        <span className="text-primary mt-1">•</span>
-                        <span>{service}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </CardContent>
-              </Card>
+              <ScrollReveal key={index} delay={index * 100}>
+                <Card className="border-border hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 hover:scale-[1.02] bg-card h-full group cursor-pointer">
+                  <CardHeader>
+                    <div className="w-14 h-14 rounded-full bg-muted flex items-center justify-center mb-4 transition-all duration-500 group-hover:bg-accent group-hover:scale-110 group-hover:rotate-12">
+                      <Icon className="w-7 h-7 text-secondary transition-colors duration-500 group-hover:text-accent-foreground" />
+                    </div>
+                    <CardTitle className="text-2xl font-serif text-foreground mb-2 transition-colors duration-300 group-hover:text-accent">
+                      {area.title}
+                    </CardTitle>
+                    <CardDescription className="text-card-foreground leading-relaxed text-base transition-all duration-300 group-hover:text-foreground">
+                      {area.description}
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <h4 className="font-semibold text-foreground mb-3">Servicios incluidos:</h4>
+                    <ul className="space-y-2">
+                      {area.services.map((service, idx) => (
+                        <li key={idx} className="flex items-start gap-2 text-card-foreground">
+                          <span className="text-primary mt-1">•</span>
+                          <span>{service}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </CardContent>
+                </Card>
+              </ScrollReveal>
             )
           })}
         </div>
 
-        <div className="bg-primary text-primary-foreground p-8 sm:p-12 rounded-lg text-center">
-          <h2 className="text-2xl sm:text-3xl font-serif font-bold mb-4">¿No encuentra el área que busca?</h2>
-          <p className="text-lg mb-6 opacity-95 max-w-2xl mx-auto">
-            Contáctenos para consultar sobre otras áreas de práctica. Estamos aquí para ayudarle con cualquier cuestión
-            legal.
-          </p>
-          <Button asChild size="lg" variant="secondary" className="bg-card text-foreground hover:bg-card/90">
-            <Link href="/contacto">Contactar ahora</Link>
-          </Button>
-        </div>
+        <ScrollReveal delay={400}>
+          <div className="bg-primary text-primary-foreground p-8 sm:p-12 rounded-lg text-center">
+            <h2 className="text-2xl sm:text-3xl font-serif font-bold mb-4">¿No encuentra el área que busca?</h2>
+            <p className="text-lg mb-6 opacity-95 max-w-2xl mx-auto">
+              Contáctenos para consultar sobre otras áreas de práctica. Estamos aquí para ayudarle con cualquier
+              cuestión legal.
+            </p>
+            <Button asChild size="lg" variant="secondary" className="bg-card text-foreground hover:bg-card/90">
+              <Link href="/contacto">Contactar ahora</Link>
+            </Button>
+          </div>
+        </ScrollReveal>
       </div>
     </main>
   )

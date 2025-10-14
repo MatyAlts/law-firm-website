@@ -1,5 +1,7 @@
 "use client"
 
+import type React from "react"
+
 import Link from "next/link"
 import { useState } from "react"
 import { Menu, X } from "lucide-react"
@@ -18,12 +20,22 @@ export function Navigation() {
     { href: "/contacto", label: "Contacto" },
   ]
 
+  const handleLogoClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    if (pathname === "/") {
+      e.preventDefault()
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      })
+    }
+  }
+
   return (
     <nav className="sticky top-0 z-50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80 border-b border-border">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
           {/* Logo */}
-          <Link href="/" className="flex-shrink-0 flex items-center gap-3">
+          <Link href="/" className="flex-shrink-0 flex items-center gap-3" onClick={handleLogoClick}>
             <h1 className="text-xl sm:text-2xl font-serif font-bold text-foreground transition-transform hover:scale-105">
               BLS
             </h1>
