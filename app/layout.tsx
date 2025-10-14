@@ -8,6 +8,7 @@ import "./globals.css"
 import { Navigation } from "@/components/navigation"
 import { Footer } from "@/components/footer"
 import { Suspense } from "react"
+import { PageTransition } from "@/components/page-transition"
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
@@ -32,7 +33,7 @@ export default function RootLayout({
       <body className={`font-sans ${GeistSans.variable} ${GeistMono.variable} ${playfair.variable} antialiased`}>
         <Suspense fallback={<div>Loading...</div>}>
           <Navigation />
-          {children}
+          <PageTransition>{children}</PageTransition>
           <Footer />
         </Suspense>
         <Analytics />
