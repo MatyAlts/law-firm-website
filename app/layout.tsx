@@ -31,7 +31,7 @@ export default function RootLayout({
   return (
     <html lang="es">
       <body className={`font-sans ${GeistSans.variable} ${GeistMono.variable} ${playfair.variable} antialiased`}>
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={<div>Cargando...</div>}>
           <Navigation />
           <PageTransition>{children}</PageTransition>
           <Footer />
