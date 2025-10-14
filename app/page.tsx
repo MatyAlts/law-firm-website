@@ -44,7 +44,7 @@ export default function HomePage() {
 
         <div className="container relative z-10 mx-auto px-4 sm:px-6 lg:px-8 py-20 text-center">
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-serif font-bold text-white mb-6 text-balance drop-shadow-lg">
-            Belmonte – Lucero – Salafia
+            Belmonte, Lucero Salafia
           </h1>
           <p className="text-xl sm:text-2xl text-white/95 mb-4 font-serif italic drop-shadow-md">Estudio Jurídico</p>
           <p className="text-lg sm:text-xl text-white/90 mb-8 max-w-2xl mx-auto text-pretty drop-shadow-md">

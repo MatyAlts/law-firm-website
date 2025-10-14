@@ -16,7 +16,7 @@ const playfair = Playfair_Display({
 })
 
 export const metadata: Metadata = {
-  title: "Belmonte – Lucero – Salafia | Estudio Jurídico en Mendoza",
+  title: "Belmonte, Lucero Salafia | Estudio Jurídico en Mendoza",
   description:
     "Estudio jurídico especializado en derecho de familia, civil y laboral en Mendoza, Argentina. Compromiso, ética y resultados.",
   generator: "v0.app",

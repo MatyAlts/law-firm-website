@@ -12,7 +12,7 @@ export default function NosotrosPage() {
             <div className="bg-card p-8 rounded-lg mb-8">
               <h2 className="text-2xl sm:text-3xl font-serif font-bold text-foreground mb-4">Nuestra Historia</h2>
               <p className="text-card-foreground leading-relaxed mb-4">
-                Belmonte – Lucero – Salafia es un estudio jurídico fundado en Mendoza, Argentina, con el objetivo de
+                Belmonte, Lucero Salafia es un estudio jurídico fundado en Mendoza, Argentina, con el objetivo de
                 brindar servicios legales de excelencia en las áreas de derecho de familia, civil y laboral.
               </p>
               <p className="text-card-foreground leading-relaxed">
@@ -64,7 +64,7 @@ export default function NosotrosPage() {
             <div className="bg-card p-8 rounded-lg">
               <h2 className="text-2xl sm:text-3xl font-serif font-bold text-foreground mb-4">¿Por qué elegirnos?</h2>
               <p className="text-card-foreground leading-relaxed mb-4">
-                En Belmonte – Lucero – Salafia entendemos que cada caso es único y requiere un enfoque personalizado.
+                En Belmonte, Lucero Salafia entendemos que cada caso es único y requiere un enfoque personalizado.
                 Nos tomamos el tiempo necesario para comprender su situación y diseñar la mejor estrategia legal.
               </p>
               <p className="text-card-foreground leading-relaxed">
