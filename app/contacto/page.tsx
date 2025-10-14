@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { MapPin, Mail, Phone, MessageCircle, Clock } from "lucide-react"
 import { useState } from "react"
 
@@ -29,6 +30,13 @@ export default function ContactoPage() {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
+    })
+  }
+
+  const handleSelectChange = (value: string) => {
+    setFormData({
+      ...formData,
+      asunto: value,
     })
   }
 
@@ -101,15 +109,19 @@ export default function ContactoPage() {
                   <label htmlFor="asunto" className="block text-sm font-medium text-card-foreground mb-2">
                     Asunto *
                   </label>
-                  <Input
-                    id="asunto"
-                    name="asunto"
-                    type="text"
-                    required
-                    value={formData.asunto}
-                    onChange={handleChange}
-                    className="bg-background border-border"
-                  />
+                  <Select required value={formData.asunto} onValueChange={handleSelectChange}>
+                    <SelectTrigger className="bg-background border-border">
+                      <SelectValue placeholder="Seleccione un área" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="Derecho de Familia">Derecho de Familia</SelectItem>
+                      <SelectItem value="Sucesiones">Sucesiones</SelectItem>
+                      <SelectItem value="Accidentes de Tránsito">Accidentes de Tránsito</SelectItem>
+                      <SelectItem value="Divorcios">Divorcios</SelectItem>
+                      <SelectItem value="Daños y Perjuicios">Daños y Perjuicios</SelectItem>
+                      <SelectItem value="Otro">Otro</SelectItem>
+                    </SelectContent>
+                  </Select>
                 </div>
 
                 <div>
