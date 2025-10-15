@@ -1,17 +1,16 @@
 "use client"
 
 import type React from "react"
-
-import { useState } from "react"
+import { useEffect, useState } from "react"
+import Link from "next/link"
 import { useRouter } from "next/navigation"
-import { createClient } from "@/lib/supabase/client"
+import { Plus, Trash2, Save, ArrowLeft } from "lucide-react"
+
 import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Plus, Trash2, Save, ArrowLeft } from "lucide-react"
-import Link from "next/link"
 
 interface Section {
   id: string
@@ -23,11 +22,28 @@ export default function NewBlogPage() {
   const router = useRouter()
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [authorName, setAuthorName] = useState("Equipo Legal")
 
   const [title, setTitle] = useState("")
-  const [description, setDescription] = useState("")
+  const [summary, setSummary] = useState("")
   const [slug, setSlug] = useState("")
   const [sections, setSections] = useState<Section[]>([])
+
+  useEffect(() => {
+    const fetchAuthor = async () => {
+      try {
+        const response = await fetch("/api/auth/me")
+        if (response.ok) {
+          const data = await response.json()
+          setAuthorName(data.email)
+        }
+      } catch (err) {
+        console.error("No se pudo obtener el usuario actual", err)
+      }
+    }
+
+    fetchAuthor()
+  }, [])
 
   const generateSlug = (text: string) => {
     return text
@@ -57,28 +73,42 @@ export default function NewBlogPage() {
     setSections(sections.map((s) => (s.id === id ? { ...s, [field]: value } : s)))
   }
 
+  const buildContent = () => {
+    if (sections.length === 0) return summary
+    const built = sections
+      .map((section) => {
+        const title = section.title.trim()
+        const content = section.content.trim()
+        if (!title && !content) return ""
+        return `${title ? `## ${title}\n\n` : ""}${content}`
+      })
+      .filter(Boolean)
+      .join("\n\n")
+    return built || summary
+  }
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsLoading(true)
     setError(null)
 
-    const supabase = createClient()
-
     try {
-      const {
-        data: { user },
-      } = await supabase.auth.getUser()
-      if (!user) throw new Error("No autenticado")
-
-      const { error: insertError } = await supabase.from("blogs").insert({
-        title,
-        description,
-        slug,
-        sections: sections.map(({ id, ...rest }) => rest),
-        author_id: user.id,
+      const response = await fetch("/api/blogs", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          title,
+          summary,
+          slug,
+          content: buildContent(),
+          authorName,
+        }),
       })
 
-      if (insertError) throw insertError
+      if (!response.ok) {
+        const data = await response.json().catch(() => ({ error: "Error al crear el blog" }))
+        throw new Error(data.error || "Error al crear el blog")
+      }
 
       router.push("/admin")
       router.refresh()
@@ -90,7 +120,7 @@ export default function NewBlogPage() {
   }
 
   return (
-    <div className="max-w-4xl mx-auto space-y-6">
+    <div className="mx-auto max-w-4xl space-y-6">
       <div className="flex items-center gap-4">
         <Link href="/admin">
           <Button variant="ghost" size="sm" className="gap-2">
@@ -108,7 +138,7 @@ export default function NewBlogPage() {
         <Card>
           <CardHeader>
             <CardTitle>Información Básica</CardTitle>
-            <CardDescription>Título, descripción y URL del artículo</CardDescription>
+            <CardDescription>Título, resumen y URL del artículo</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="space-y-2">
@@ -135,14 +165,24 @@ export default function NewBlogPage() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="description">Descripción *</Label>
+              <Label htmlFor="summary">Resumen *</Label>
               <Textarea
-                id="description"
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
+                id="summary"
+                value={summary}
+                onChange={(e) => setSummary(e.target.value)}
                 placeholder="Breve resumen del artículo..."
                 rows={3}
                 required
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="author">Autor</Label>
+              <Input
+                id="author"
+                value={authorName}
+                onChange={(e) => setAuthorName(e.target.value)}
+                placeholder="Nombre del autor"
               />
             </div>
           </CardContent>
@@ -163,14 +203,14 @@ export default function NewBlogPage() {
           </CardHeader>
           <CardContent className="space-y-6">
             {sections.length === 0 && (
-              <div className="text-center py-8 text-muted-foreground">
+              <div className="py-8 text-center text-muted-foreground">
                 <p>No hay secciones agregadas</p>
                 <p className="text-sm">Haga clic en "Agregar Sección" para comenzar</p>
               </div>
             )}
 
             {sections.map((section, index) => (
-              <div key={section.id} className="space-y-4 p-4 border rounded-lg bg-muted/30">
+              <div key={section.id} className="space-y-4 rounded-lg border bg-muted/30 p-4">
                 <div className="flex items-center justify-between">
                   <h3 className="font-medium">Sección {index + 1}</h3>
                   <Button
@@ -201,7 +241,7 @@ export default function NewBlogPage() {
                     id={`section-content-${section.id}`}
                     value={section.content}
                     onChange={(e) => updateSection(section.id, "content", e.target.value)}
-                    placeholder="Escriba el contenido de esta sección..."
+                    placeholder="Ingrese el contenido de la sección"
                     rows={6}
                   />
                 </div>
@@ -210,23 +250,16 @@ export default function NewBlogPage() {
           </CardContent>
         </Card>
 
-        {error && (
-          <Card className="border-destructive">
-            <CardContent className="pt-6">
-              <p className="text-destructive">{error}</p>
-            </CardContent>
-          </Card>
-        )}
+        {error && <p className="text-sm text-destructive">{error}</p>}
 
         <div className="flex items-center justify-end gap-4">
-          <Link href="/admin">
-            <Button type="button" variant="outline">
-              Cancelar
-            </Button>
-          </Link>
-          <Button type="submit" disabled={isLoading} className="gap-2">
+          <Button type="button" variant="outline" onClick={() => router.push("/admin")} className="gap-2">
+            <ArrowLeft className="h-4 w-4" />
+            Cancelar
+          </Button>
+          <Button type="submit" className="gap-2" disabled={isLoading}>
             <Save className="h-4 w-4" />
-            {isLoading ? "Publicando..." : "Publicar Blog"}
+            {isLoading ? "Guardando..." : "Guardar Blog"}
           </Button>
         </div>
       </form>

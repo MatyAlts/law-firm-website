@@ -21,7 +21,7 @@ export default function SetupAdminPage() {
       const data = await response.json()
 
       if (response.ok) {
-        setResult(`✅ ${data.message}\nEmail: ${data.user.email}\nYou can now login at /admin/login`)
+        setResult(`✅ ${data.message}\nEmail: ${data.user.email}\nContraseña: changeme\nAcceda desde /admin/login`)
       } else {
         setResult(`❌ Error: ${data.error}`)
       }
@@ -45,12 +45,12 @@ export default function SetupAdminPage() {
             <CardHeader>
               <CardTitle>Create Admin Account</CardTitle>
               <CardDescription>
-                Click the button below to create the admin user with email: natal00203@gmail.com
+                El backend Java crea por defecto la cuenta admin@lawfirm.com con contraseña "changeme".
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <Button onClick={handleSetup} className="w-full" disabled={isLoading}>
-                {isLoading ? "Creating Admin..." : "Create Admin User"}
+                {isLoading ? "Verificando..." : "Confirmar Usuario"}
               </Button>
               {result && (
                 <div className="rounded-lg bg-muted p-4">
