@@ -35,6 +35,8 @@ export async function POST() {
       id: authData.user.id,
       email: authData.user.email,
       full_name: "Admin",
+      role: "super_admin",
+      status: "active",
     })
 
     if (profileError) {
