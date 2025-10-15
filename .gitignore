@@ -10,6 +10,7 @@
 # production
 /build
 /backend/target
+/backend/out
 
 # debug
 npm-debug.log*

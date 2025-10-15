@@ -7,7 +7,7 @@
     "dev": "next dev",
     "lint": "eslint .",
     "start": "next start",
-    "backend": "cd backend && mvn spring-boot:run"
+    "backend": "cd backend && ./run.sh"
   },
   "dependencies": {
     "@emotion/is-prop-valid": "latest",
