@@ -7,7 +7,6 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { useRouter } from "next/navigation"
 import { useState } from "react"
 import { Scale } from "lucide-react"
 
@@ -16,7 +15,6 @@ export default function AdminLoginPage() {
   const [password, setPassword] = useState("")
   const [error, setError] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(false)
-  const router = useRouter()
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -30,11 +28,9 @@ export default function AdminLoginPage() {
         password,
       })
       if (error) throw error
-      router.push("/admin")
-      router.refresh()
+      window.location.href = "/admin"
     } catch (error: unknown) {
       setError(error instanceof Error ? error.message : "Error al iniciar sesión")
-    } finally {
       setIsLoading(false)
     }
   }

@@ -1,6 +1,5 @@
 import type React from "react"
 import { createClient } from "@/lib/supabase/server"
-import { redirect } from "next/navigation"
 import { Scale, FileText, LogOut, Home } from "lucide-react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
@@ -53,7 +52,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
   } = await supabase.auth.getUser()
 
   if (!user) {
-    redirect("/admin/login")
+    return null
   }
 
   return (
