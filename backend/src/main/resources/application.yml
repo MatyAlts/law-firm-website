@@ -1,0 +1,22 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/lawfirm
+    username: 
+    password: 
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+    open-in-view: false
+  sql:
+    init:
+      mode: always
+server:
+  port: 8080
+
+app:
+  security:
+    jwt-secret: ${APP_JWT_SECRET:change-me-change-me-change-me-change}
+    jwt-expiration-minutes: 60

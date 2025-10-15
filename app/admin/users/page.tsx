@@ -1,40 +1,41 @@
-import { createServerClient } from "@/lib/supabase/server"
 import { redirect } from "next/navigation"
+
 import { AddAdminForm } from "@/components/add-admin-form"
 import { AdminUsersList } from "@/components/admin-users-list"
+import { fetchApi } from "@/lib/api/fetch"
+import type { AdminUser, LoginResponse } from "@/lib/api/types"
 
 export default async function AdminUsersPage() {
-  const supabase = await createServerClient()
-  const {
-    data: { user },
-  } = await supabase.auth.getUser()
+  let currentUser: LoginResponse | null = null
+  let admins: AdminUser[] = []
 
-  if (!user) {
+  try {
+    currentUser = await fetchApi<LoginResponse>("/auth/me")
+    admins = await fetchApi<AdminUser[]>("/admins")
+  } catch (error) {
     redirect("/admin/login")
   }
 
-  // Get current admin's role
-  const { data: currentAdmin } = await supabase.from("admin_profiles").select("role").eq("id", user.id).single()
-
-  // Get all admin users
-  const { data: admins } = await supabase.from("admin_profiles").select("*").order("created_at", { ascending: false })
+  if (!currentUser) {
+    redirect("/admin/login")
+  }
 
   return (
-    <div className="container mx-auto py-8 px-4">
+    <div className="container mx-auto px-4 py-8">
       <div className="mb-8">
-        <h1 className="font-serif text-3xl font-bold text-primary mb-2">Admin Users</h1>
-        <p className="text-muted-foreground">Manage admin accounts and permissions</p>
+        <h1 className="mb-2 font-serif text-3xl font-bold text-primary">Administradores</h1>
+        <p className="text-muted-foreground">Gestione las cuentas del panel</p>
       </div>
 
       <div className="grid gap-8 lg:grid-cols-2">
         <div>
-          <h2 className="font-serif text-xl font-semibold mb-4">Add New Admin</h2>
-          <AddAdminForm currentUserRole={currentAdmin?.role || "editor"} />
+          <h2 className="mb-4 font-serif text-xl font-semibold">Agregar Nuevo Admin</h2>
+          <AddAdminForm currentUserRole={currentUser.role} />
         </div>
 
         <div>
-          <h2 className="font-serif text-xl font-semibold mb-4">Existing Admins</h2>
-          <AdminUsersList admins={admins || []} currentUserId={user.id} />
+          <h2 className="mb-4 font-serif text-xl font-semibold">Admins Existentes</h2>
+          <AdminUsersList admins={admins} currentUserEmail={currentUser.email} />
         </div>
       </div>
     </div>

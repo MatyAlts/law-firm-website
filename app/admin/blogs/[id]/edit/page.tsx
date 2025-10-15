@@ -1,17 +1,16 @@
 "use client"
 
 import type React from "react"
+import { useEffect, useState } from "react"
+import Link from "next/link"
+import { useParams, useRouter } from "next/navigation"
+import { ArrowLeft, Plus, Save, Trash2 } from "lucide-react"
 
-import { useState, useEffect } from "react"
-import { useRouter, useParams } from "next/navigation"
-import { createClient } from "@/lib/supabase/client"
 import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Plus, Trash2, Save, ArrowLeft, Loader2 } from "lucide-react"
-import Link from "next/link"
 
 interface Section {
   id: string
@@ -20,46 +19,60 @@ interface Section {
 }
 
 export default function EditBlogPage() {
+  const params = useParams<{ id: string }>()
   const router = useRouter()
-  const params = useParams()
-  const blogId = params.id as string
+  const blogId = params.id
 
-  const [isLoading, setIsLoading] = useState(false)
-  const [isFetching, setIsFetching] = useState(true)
+  const [isLoading, setIsLoading] = useState(true)
+  const [isSaving, setIsSaving] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
   const [title, setTitle] = useState("")
-  const [description, setDescription] = useState("")
+  const [summary, setSummary] = useState("")
   const [slug, setSlug] = useState("")
+  const [authorName, setAuthorName] = useState("Equipo Legal")
   const [sections, setSections] = useState<Section[]>([])
 
   useEffect(() => {
     const fetchBlog = async () => {
-      const supabase = createClient()
-      const { data, error } = await supabase.from("blogs").select("*").eq("id", blogId).single()
-
-      if (error) {
-        setError("Error al cargar el blog")
-        setIsFetching(false)
-        return
+      try {
+        const response = await fetch(`/api/blogs/${blogId}`)
+        if (!response.ok) {
+          throw new Error("No se pudo cargar el blog")
+        }
+        const blog = await response.json()
+        setTitle(blog.title)
+        setSummary(blog.summary)
+        setSlug(blog.slug)
+        setAuthorName(blog.authorName || "Equipo Legal")
+        setSections(parseContent(blog.content))
+      } catch (err) {
+        setError(err instanceof Error ? err.message : "Error desconocido")
+      } finally {
+        setIsLoading(false)
       }
-
-      if (data) {
-        setTitle(data.title)
-        setDescription(data.description)
-        setSlug(data.slug)
-        setSections(
-          (data.sections as Array<{ title: string; content: string }>).map((s) => ({
-            ...s,
-            id: crypto.randomUUID(),
-          })),
-        )
-      }
-      setIsFetching(false)
     }
 
-    fetchBlog()
+    if (blogId) {
+      fetchBlog()
+    }
   }, [blogId])
+
+  const generateSlug = (text: string) => {
+    return text
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/(^-|-$)/g, "")
+  }
+
+  const handleTitleChange = (value: string) => {
+    setTitle(value)
+    if (!slug || slug === generateSlug(title)) {
+      setSlug(generateSlug(value))
+    }
+  }
 
   const addSection = () => {
     setSections([...sections, { id: crypto.randomUUID(), title: "", content: "" }])
@@ -73,46 +86,58 @@ export default function EditBlogPage() {
     setSections(sections.map((s) => (s.id === id ? { ...s, [field]: value } : s)))
   }
 
+  const buildContent = () => {
+    if (sections.length === 0) return summary
+    const built = sections
+      .map((section) => {
+        const title = section.title.trim()
+        const content = section.content.trim()
+        if (!title && !content) return ""
+        return `${title ? `## ${title}\n\n` : ""}${content}`
+      })
+      .filter(Boolean)
+      .join("\n\n")
+    return built || summary
+  }
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    setIsLoading(true)
+    setIsSaving(true)
     setError(null)
 
-    const supabase = createClient()
-
     try {
-      const { error: updateError } = await supabase
-        .from("blogs")
-        .update({
+      const response = await fetch(`/api/blogs/${blogId}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
           title,
-          description,
+          summary,
           slug,
-          sections: sections.map(({ id, ...rest }) => rest),
-          updated_at: new Date().toISOString(),
-        })
-        .eq("id", blogId)
+          content: buildContent(),
+          authorName,
+        }),
+      })
 
-      if (updateError) throw updateError
+      if (!response.ok) {
+        const data = await response.json().catch(() => ({ error: "Error al actualizar el blog" }))
+        throw new Error(data.error || "Error al actualizar el blog")
+      }
 
       router.push("/admin")
       router.refresh()
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : "Error al actualizar el blog")
     } finally {
-      setIsLoading(false)
+      setIsSaving(false)
     }
   }
 
-  if (isFetching) {
-    return (
-      <div className="flex items-center justify-center min-h-[400px]">
-        <Loader2 className="h-8 w-8 animate-spin text-primary" />
-      </div>
-    )
+  if (isLoading) {
+    return <p>Cargando...</p>
   }
 
   return (
-    <div className="max-w-4xl mx-auto space-y-6">
+    <div className="mx-auto max-w-4xl space-y-6">
       <div className="flex items-center gap-4">
         <Link href="/admin">
           <Button variant="ghost" size="sm" className="gap-2">
@@ -122,7 +147,7 @@ export default function EditBlogPage() {
         </Link>
         <div>
           <h1 className="font-serif text-3xl font-bold text-primary">Editar Blog</h1>
-          <p className="text-muted-foreground">Modifique los campos del artículo</p>
+          <p className="text-muted-foreground">Modifique el contenido del artículo</p>
         </div>
       </div>
 
@@ -130,7 +155,7 @@ export default function EditBlogPage() {
         <Card>
           <CardHeader>
             <CardTitle>Información Básica</CardTitle>
-            <CardDescription>Título, descripción y URL del artículo</CardDescription>
+            <CardDescription>Actualice el título, resumen y URL</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="space-y-2">
@@ -138,7 +163,7 @@ export default function EditBlogPage() {
               <Input
                 id="title"
                 value={title}
-                onChange={(e) => setTitle(e.target.value)}
+                onChange={(e) => handleTitleChange(e.target.value)}
                 placeholder="Ej: Reformas al Código Civil 2024"
                 required
               />
@@ -157,14 +182,22 @@ export default function EditBlogPage() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="description">Descripción *</Label>
+              <Label htmlFor="summary">Resumen *</Label>
               <Textarea
-                id="description"
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-                placeholder="Breve resumen del artículo..."
+                id="summary"
+                value={summary}
+                onChange={(e) => setSummary(e.target.value)}
                 rows={3}
                 required
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="author">Autor</Label>
+              <Input
+                id="author"
+                value={authorName}
+                onChange={(e) => setAuthorName(e.target.value)}
               />
             </div>
           </CardContent>
@@ -175,7 +208,7 @@ export default function EditBlogPage() {
             <div className="flex items-center justify-between">
               <div>
                 <CardTitle>Secciones del Artículo</CardTitle>
-                <CardDescription>Agregue secciones con títulos y contenido</CardDescription>
+                <CardDescription>Modifique el contenido por secciones</CardDescription>
               </div>
               <Button type="button" onClick={addSection} variant="outline" size="sm" className="gap-2 bg-transparent">
                 <Plus className="h-4 w-4" />
@@ -185,14 +218,14 @@ export default function EditBlogPage() {
           </CardHeader>
           <CardContent className="space-y-6">
             {sections.length === 0 && (
-              <div className="text-center py-8 text-muted-foreground">
+              <div className="py-8 text-center text-muted-foreground">
                 <p>No hay secciones agregadas</p>
-                <p className="text-sm">Haga clic en "Agregar Sección" para comenzar</p>
+                <p className="text-sm">Agregue secciones para estructurar el contenido</p>
               </div>
             )}
 
             {sections.map((section, index) => (
-              <div key={section.id} className="space-y-4 p-4 border rounded-lg bg-muted/30">
+              <div key={section.id} className="space-y-4 rounded-lg border bg-muted/30 p-4">
                 <div className="flex items-center justify-between">
                   <h3 className="font-medium">Sección {index + 1}</h3>
                   <Button
@@ -213,7 +246,6 @@ export default function EditBlogPage() {
                     id={`section-title-${section.id}`}
                     value={section.title}
                     onChange={(e) => updateSection(section.id, "title", e.target.value)}
-                    placeholder="Ej: Introducción"
                   />
                 </div>
 
@@ -223,7 +255,6 @@ export default function EditBlogPage() {
                     id={`section-content-${section.id}`}
                     value={section.content}
                     onChange={(e) => updateSection(section.id, "content", e.target.value)}
-                    placeholder="Escriba el contenido de esta sección..."
                     rows={6}
                   />
                 </div>
@@ -232,26 +263,49 @@ export default function EditBlogPage() {
           </CardContent>
         </Card>
 
-        {error && (
-          <Card className="border-destructive">
-            <CardContent className="pt-6">
-              <p className="text-destructive">{error}</p>
-            </CardContent>
-          </Card>
-        )}
+        {error && <p className="text-sm text-destructive">{error}</p>}
 
         <div className="flex items-center justify-end gap-4">
-          <Link href="/admin">
-            <Button type="button" variant="outline">
-              Cancelar
-            </Button>
-          </Link>
-          <Button type="submit" disabled={isLoading} className="gap-2">
+          <Button type="button" variant="outline" onClick={() => router.push("/admin")} className="gap-2">
+            <ArrowLeft className="h-4 w-4" />
+            Cancelar
+          </Button>
+          <Button type="submit" className="gap-2" disabled={isSaving}>
             <Save className="h-4 w-4" />
-            {isLoading ? "Guardando..." : "Guardar Cambios"}
+            {isSaving ? "Guardando..." : "Guardar Cambios"}
           </Button>
         </div>
       </form>
     </div>
   )
+}
+
+function parseContent(content: string): Section[] {
+  if (!content) return []
+
+  const lines = content.split(/\r?\n/)
+  const sections: Section[] = []
+  let currentTitle = ""
+  let currentContent: string[] = []
+
+  const flush = () => {
+    if (currentTitle || currentContent.length > 0) {
+      sections.push({ id: crypto.randomUUID(), title: currentTitle.replace(/^##\s*/, ""), content: currentContent.join("\n").trim() })
+    }
+    currentTitle = ""
+    currentContent = []
+  }
+
+  lines.forEach((line) => {
+    if (line.startsWith("## ")) {
+      flush()
+      currentTitle = line
+    } else {
+      currentContent.push(line)
+    }
+  })
+
+  flush()
+
+  return sections
 }
