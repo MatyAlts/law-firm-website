@@ -10,6 +10,22 @@
 This repository will stay in sync with your deployed chats on [v0.app](https://v0.app).
 Any changes you make to your deployed app will be automatically pushed to this repository from [v0.app](https://v0.app).
 
+## Backend en Java
+
+El proyecto incluye un backend desarrollado con Spring Boot en el directorio [`backend/`](backend/). Para ejecutarlo necesitas una base de datos PostgreSQL local y Java 17.
+
+1. Crea una base de datos llamada `lawfirm` y actualiza las credenciales en [`backend/src/main/resources/application.yml`](backend/src/main/resources/application.yml).
+2. Establece una variable de entorno `APP_JWT_SECRET` con una cadena segura de al menos 32 caracteres.
+3. Desde la carpeta `backend/` ejecuta:
+
+   ```bash
+   mvn spring-boot:run
+   ```
+
+También puedes iniciar el backend con `pnpm backend`, que ejecuta el comando anterior.
+
+El backend expone los endpoints bajo `http://localhost:8080/api`. El frontend espera que esta URL se configure en la variable `NEXT_PUBLIC_API_BASE_URL` (por defecto apunta a `http://localhost:8080/api`).
+
 ## Deployment
 
 Your project is live at:

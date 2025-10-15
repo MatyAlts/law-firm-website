@@ -1,10 +1,12 @@
 import type React from "react"
-import { createClient } from "@/lib/supabase/server"
-import { Scale, FileText, LogOut, Home } from "lucide-react"
-import Link from "next/link"
-import { Button } from "@/components/ui/button"
 import { headers } from "next/headers"
 import { redirect } from "next/navigation"
+import Link from "next/link"
+import { Scale, FileText, LogOut, Home } from "lucide-react"
+
+import { Button } from "@/components/ui/button"
+import { fetchApi } from "@/lib/api/fetch"
+import type { LoginResponse } from "@/lib/api/types"
 
 async function AdminNav({ userEmail }: { userEmail: string }) {
   return (
@@ -54,20 +56,15 @@ export default async function AdminLayout({ children }: { children: React.ReactN
     return <>{children}</>
   }
 
-  const supabase = await createClient()
-
-  const {
-    data: { user },
-  } = await supabase.auth.getUser()
-
-  if (!user) {
+  try {
+    const user = await fetchApi<LoginResponse>("/auth/me")
+    return (
+      <div className="min-h-screen bg-background">
+        <AdminNav userEmail={user.email} />
+        <main className="container mx-auto px-4 py-8">{children}</main>
+      </div>
+    )
+  } catch (error) {
     redirect("/admin/login")
   }
-
-  return (
-    <div className="min-h-screen bg-background">
-      <AdminNav userEmail={user.email || ""} />
-      <main className="container mx-auto px-4 py-8">{children}</main>
-    </div>
-  )
 }
