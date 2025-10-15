@@ -5,19 +5,19 @@
 
 :root {
   /* Law firm color palette */
-  --background: #f5f5f5; /* Light gray background */
-  --foreground: #4d1616; /* Dark burgundy - principal text color */
+  --background: #f5f5f5;
+  --foreground: #4d1616;
   --card: #ffffff;
   --card-foreground: #4d1616;
   --popover: #ffffff;
   --popover-foreground: #4d1616;
-  --primary: #4d1616; /* Dark burgundy */
+  --primary: #4d1616;
   --primary-foreground: #ffffff;
-  --secondary: #b0b0b0; /* Light gray */
+  --secondary: #b0b0b0;
   --secondary-foreground: #4d1616;
   --muted: #e8e8e8;
   --muted-foreground: #6b6b6b;
-  --accent: #243b55; /* Dark blue accent */
+  --accent: #243b55;
   --accent-foreground: #ffffff;
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: #ffffff;
@@ -34,13 +34,11 @@
   --sidebar-foreground: #4d1616;
   --sidebar-primary: #243b55;
   --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: #cba135; /* Gold details */
+  --sidebar-accent: #cba135;
   --sidebar-accent-foreground: #4d1616;
   --sidebar-border: #d4d4d4;
   --sidebar-ring: #243b55;
-
-  /* Custom law firm colors */
-  --details: #cba135; /* Gold for special highlights */
+  --details: #cba135;
 }
 
 .dark {

@@ -10,7 +10,7 @@ interface ScrollRevealProps {
   delay?: number
 }
 
-export function ScrollReveal({ children, className = "", delay = 0 }: ScrollRevealProps) {
+export default function ScrollReveal({ children, className = "", delay = 0 }: ScrollRevealProps) {
   const [isVisible, setIsVisible] = useState(false)
   const ref = useRef<HTMLDivElement>(null)
 
@@ -52,3 +52,5 @@ export function ScrollReveal({ children, className = "", delay = 0 }: ScrollReve
     </div>
   )
 }
+
+export { ScrollReveal }
