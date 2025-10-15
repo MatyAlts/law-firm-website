@@ -3,6 +3,7 @@ import { createClient } from "@/lib/supabase/server"
 import { Scale, FileText, LogOut, Home } from "lucide-react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
+import { headers } from "next/headers"
 
 async function AdminNav({ userEmail }: { userEmail: string }) {
   return (
@@ -45,6 +46,13 @@ async function AdminNav({ userEmail }: { userEmail: string }) {
 }
 
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
+  const headersList = await headers()
+  const pathname = headersList.get("x-pathname") || ""
+
+  if (pathname.includes("/admin/login")) {
+    return <>{children}</>
+  }
+
   const supabase = await createClient()
 
   const {
