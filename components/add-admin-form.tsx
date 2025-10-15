@@ -39,6 +39,7 @@ export function AddAdminForm({ currentUserRole }: AddAdminFormProps) {
         headers: {
           "Content-Type": "application/json",
         },
+        credentials: "include",
         body: JSON.stringify(formData),
       })
 

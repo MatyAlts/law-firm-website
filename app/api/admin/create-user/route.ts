@@ -2,6 +2,8 @@ import { createClient } from "@supabase/supabase-js"
 import { NextResponse } from "next/server"
 import { createServerClient } from "@/lib/supabase/server"
 
+export const runtime = "nodejs"
+
 export async function POST(request: Request) {
   try {
     // Check if the requesting user is an admin
