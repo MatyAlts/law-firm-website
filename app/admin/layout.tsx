@@ -4,6 +4,7 @@ import { Scale, FileText, LogOut, Home } from "lucide-react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { headers } from "next/headers"
+import { redirect } from "next/navigation"
 
 async function AdminNav({ userEmail }: { userEmail: string }) {
   return (
@@ -46,7 +47,7 @@ async function AdminNav({ userEmail }: { userEmail: string }) {
 }
 
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
-  const headersList = await headers()
+  const headersList = headers()
   const pathname = headersList.get("x-pathname") || ""
 
   if (pathname.includes("/admin/login")) {
@@ -60,7 +61,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
   } = await supabase.auth.getUser()
 
   if (!user) {
-    return null
+    redirect("/admin/login")
   }
 
   return (
