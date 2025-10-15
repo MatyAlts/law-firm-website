@@ -7,7 +7,9 @@
     "dev": "next dev",
     "lint": "eslint .",
     "start": "next start",
-    "backend": "cd backend && mvn spring-boot:run"
+    "backend": "cd backend && mvn spring-boot:run",
+    "fulldev": "concurrently \"npm run backend\" \"npm run dev\"",
+    "fullstart": "concurrently \"npm run backend\" \"npm run start\""
   },
   "dependencies": {
     "@emotion/is-prop-valid": "latest",
@@ -44,6 +46,7 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "cmdk": "1.0.4",
+    "concurrently": "^9.2.1",
     "date-fns": "4.1.0",
     "embla-carousel-react": "8.5.1",
     "framer-motion": "latest",

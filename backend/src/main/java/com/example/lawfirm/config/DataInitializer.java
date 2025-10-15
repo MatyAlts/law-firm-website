@@ -26,8 +26,8 @@ public class DataInitializer {
     @Transactional
     void seedAdmin(AdminService adminService) {
         if (adminService.listAdmins().isEmpty()) {
-            adminService.createAdmin("admin@lawfirm.com", "changeme", "superadmin");
-            logger.info("Default admin user created with email admin@lawfirm.com and password changeme");
+            adminService.createAdmin("natal00203@gmail.com", "Mustafa1308", "superadmin");
+            logger.info("Default admin user created with email natal00203@gmail.com and password Mustafa1308");
         }
     }
 

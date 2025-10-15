@@ -31,19 +31,19 @@ public class JwtService {
     public String generateToken(String subject, Map<String, Object> claims) {
         Instant now = Instant.now();
         return Jwts.builder()
-                .subject(subject)
-                .claims(claims)
-                .issuedAt(Date.from(now))
-                .expiration(Date.from(now.plus(expirationMinutes, ChronoUnit.MINUTES)))
+                .setSubject(subject)
+                .addClaims(claims)
+                .setIssuedAt(Date.from(now))
+                .setExpiration(Date.from(now.plus(expirationMinutes, ChronoUnit.MINUTES)))
                 .signWith(secretKey, SignatureAlgorithm.HS256)
                 .compact();
     }
 
     public Claims parseToken(String token) {
-        return Jwts.parser()
-                .verifyWith(secretKey)
+        return Jwts.parserBuilder()
+                .setSigningKey(secretKey)
                 .build()
-                .parseSignedClaims(token)
-                .getPayload();
+                .parseClaimsJws(token)
+                .getBody();
     }
 }
