@@ -19,6 +19,20 @@ export const metadata: Metadata = {
   description:
     "Estudio jurídico especializado en derecho de familia, civil y laboral en Mendoza, Argentina. Compromiso, ética y resultados.",
   generator: "v0.app",
+  icons: {
+    icon: [
+      {
+        url: "/images/colegio-abogados-logo.svg",
+        type: "image/svg+xml",
+      },
+    ],
+    apple: [
+      {
+        url: "/images/colegio-abogados-logo.svg",
+        type: "image/svg+xml",
+      },
+    ],
+  },
 }
 
 export default function RootLayout({
