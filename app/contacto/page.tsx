@@ -18,12 +18,57 @@ export default function ContactoPage() {
     asunto: "",
     mensaje: "",
   })
+  
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitStatus, setSubmitStatus] = useState<{
+    type: "success" | "error" | null
+    message: string
+  }>({ type: null, message: "" })
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    // Handle form submission
-    console.log("Form submitted:", formData)
-    alert("Gracias por su consulta. Nos pondremos en contacto a la brevedad.")
+    setIsSubmitting(true)
+    setSubmitStatus({ type: null, message: "" })
+
+    try {
+      const response = await fetch("https://belmontelucero-n8n.326kz3.easypanel.host/webhook/consulta", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          nombre: formData.nombre,
+          email: formData.email,
+          telefono: formData.telefono,
+          asunto: formData.asunto,
+          mensaje: formData.mensaje,
+        }),
+      })
+
+      if (response.ok) {
+        setSubmitStatus({
+          type: "success",
+          message: "¡Gracias por su consulta! Nos pondremos en contacto a la brevedad.",
+        })
+        // Reset form
+        setFormData({
+          nombre: "",
+          email: "",
+          telefono: "",
+          asunto: "",
+          mensaje: "",
+        })
+      } else {
+        throw new Error("Error al enviar el formulario")
+      }
+    } catch (error) {
+      setSubmitStatus({
+        type: "error",
+        message: "Hubo un error al enviar su consulta. Por favor, intente nuevamente o contáctenos directamente.",
+      })
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -139,8 +184,24 @@ export default function ContactoPage() {
                   />
                 </div>
 
-                <Button type="submit" className="w-full bg-primary hover:bg-primary/90 text-primary-foreground">
-                  Enviar consulta
+                {submitStatus.type && (
+                  <div
+                    className={`p-4 rounded-lg ${
+                      submitStatus.type === "success"
+                        ? "bg-green-50 text-green-800 border border-green-200"
+                        : "bg-red-50 text-red-800 border border-red-200"
+                    }`}
+                  >
+                    {submitStatus.message}
+                  </div>
+                )}
+
+                <Button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="w-full bg-primary hover:bg-primary/90 text-primary-foreground disabled:opacity-50"
+                >
+                  {isSubmitting ? "Enviando..." : "Enviar consulta"}
                 </Button>
               </form>
             </CardContent>
