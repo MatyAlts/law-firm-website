@@ -57,7 +57,7 @@ export function AdminNavClient({ userEmail }: { userEmail: string }) {
         {/* Mobile Navigation */}
         {isMenuOpen && (
           <div className="md:hidden py-4 space-y-3 border-t">
-            <div className="text-sm text-muted-foreground px-2 py-1">{userEmail}</div>
+            <div className="text-sm text-muted-foreground px-2 py-1 truncate">{userEmail}</div>
             <Link href="/admin" onClick={() => setIsMenuOpen(false)} className="block">
               <Button variant="ghost" size="sm" className="w-full justify-start gap-2">
                 <FileText className="h-4 w-4" />

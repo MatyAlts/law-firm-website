@@ -120,8 +120,8 @@ export default function NewBlogPage() {
   }
 
   return (
-    <div className="mx-auto max-w-4xl space-y-6">
-      <div className="flex items-center gap-4">
+    <div className="mx-auto max-w-4xl space-y-4 md:space-y-6">
+      <div className="space-y-3">
         <Link href="/admin">
           <Button variant="ghost" size="sm" className="gap-2">
             <ArrowLeft className="h-4 w-4" />
@@ -129,8 +129,8 @@ export default function NewBlogPage() {
           </Button>
         </Link>
         <div>
-          <h1 className="font-serif text-3xl font-bold text-primary">Crear Nuevo Blog</h1>
-          <p className="text-muted-foreground">Complete los campos para publicar un nuevo artículo</p>
+          <h1 className="font-serif text-2xl font-bold text-primary md:text-3xl">Crear Nuevo Blog</h1>
+          <p className="text-sm text-muted-foreground md:text-base">Complete los campos para publicar un nuevo artículo</p>
         </div>
       </div>
 
@@ -190,12 +190,12 @@ export default function NewBlogPage() {
 
         <Card>
           <CardHeader>
-            <div className="flex items-center justify-between">
+            <div className="space-y-3">
               <div>
                 <CardTitle>Secciones del Artículo</CardTitle>
                 <CardDescription>Agregue secciones con títulos y contenido</CardDescription>
               </div>
-              <Button type="button" onClick={addSection} variant="outline" size="sm" className="gap-2 bg-transparent">
+              <Button type="button" onClick={addSection} variant="outline" size="sm" className="w-full gap-2 bg-transparent sm:w-auto">
                 <Plus className="h-4 w-4" />
                 Agregar Sección
               </Button>

@@ -27,7 +27,7 @@ export default async function AdminDashboardPage() {
           <h1 className="font-serif text-2xl font-bold text-primary md:text-3xl">Gestión de Blogs</h1>
           <p className="text-sm text-muted-foreground md:text-base">Administre los artículos del blog</p>
         </div>
-        <Link href="/admin/blogs/new">
+        <Link href="/admin/blogs/new" className="w-full sm:w-auto">
           <Button className="gap-2 w-full sm:w-auto">
             <Plus className="h-4 w-4" />
             Nuevo Blog
@@ -66,7 +66,7 @@ export default async function AdminDashboardPage() {
               <CardHeader className="p-4 md:p-6">
                 <div className="space-y-3">
                   <div className="space-y-2">
-                    <CardTitle className="font-serif text-lg md:text-xl">{blog.title}</CardTitle>
+                    <CardTitle className="font-serif text-lg md:text-xl leading-tight">{blog.title}</CardTitle>
                     <CardDescription className="line-clamp-2 text-sm">{blog.summary}</CardDescription>
                     <div className="flex flex-col gap-1 pt-1 text-xs text-muted-foreground sm:flex-row sm:items-center sm:gap-4">
                       <span className="flex items-center gap-1">
@@ -88,6 +88,7 @@ export default async function AdminDashboardPage() {
                         variant="outline"
                         size="sm"
                         className="w-full gap-2 bg-transparent text-destructive hover:bg-destructive hover:text-destructive-foreground sm:w-auto"
+                        type="submit"
                       >
                         <Trash2 className="h-4 w-4" />
                         Eliminar

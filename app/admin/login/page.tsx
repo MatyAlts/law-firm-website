@@ -34,6 +34,9 @@ export default function AdminLoginPage() {
         throw new Error(data.error || "Error al iniciar sesión")
       }
 
+      // Esperar un momento para que las cookies se establezcan
+      await new Promise(resolve => setTimeout(resolve, 100))
+      
       // Forzar recarga completa de la página
       window.location.href = "/admin"
     } catch (error: unknown) {

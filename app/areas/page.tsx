@@ -9,7 +9,7 @@ export default function AreasPage() {
     {
       title: "Derecho de Familia",
       description:
-        "Asesoramiento integral en todas las cuestiones relacionadas con el derecho de familia: custodia de menores, régimen de visitas, alimentos, violencia familiar, y protección de derechos de niños, niñas y adolescentes.",
+        "Asesoramiento integral en todas las cuestiones relacionadas con el derecho de familia: régimen de visitas, alimentos, violencia familiar, y protección de derechos de niños, niñas y adolescentes.",
       icon: Heart,
       services: ["Custodia y régimen de visitas", "Cuota alimentaria", "Violencia familiar", "Filiación y adopción"],
     },
@@ -42,7 +42,7 @@ export default function AreasPage() {
     {
       title: "Daños y Perjuicios",
       description:
-        "Reclamos por daños materiales, morales, y lucro cesante derivados de accidentes, mala praxis, responsabilidad civil, y otros hechos ilícitos. Evaluación de daños y negociación de acuerdos.",
+        "Reclamos por daños materiales, daño moral, y lucro cesante derivados de accidentes, mala praxis, responsabilidad civil, y otros hechos ilícitos. Evaluación de daños y negociación de acuerdos.",
       icon: Scale,
       services: ["Mala praxis médica", "Responsabilidad civil", "Daño moral", "Lucro cesante"],
     },
