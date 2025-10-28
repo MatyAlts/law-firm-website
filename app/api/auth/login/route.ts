@@ -17,7 +17,7 @@ export async function POST(request: Request) {
   }
 
   const data = (await response.json()) as LoginResponse
-  const cookieStore = cookies()
+  const cookieStore = await cookies()
   cookieStore.set("admin_token", data.token, {
     httpOnly: true,
     sameSite: "lax",

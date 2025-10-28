@@ -34,7 +34,8 @@ export default function AdminLoginPage() {
         throw new Error(data.error || "Error al iniciar sesión")
       }
 
-      router.replace("/admin")
+      // Forzar recarga completa de la página
+      window.location.href = "/admin"
     } catch (error: unknown) {
       setError(error instanceof Error ? error.message : "Error al iniciar sesión")
       setIsLoading(false)

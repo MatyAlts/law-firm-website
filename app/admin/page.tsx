@@ -21,14 +21,14 @@ export default async function AdminDashboardPage() {
   }
 
   return (
-    <div className="space-y-8">
-      <div className="flex items-center justify-between">
+    <div className="space-y-6 md:space-y-8">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="font-serif text-3xl font-bold text-primary">Gestión de Blogs</h1>
-          <p className="text-muted-foreground">Administre los artículos del blog</p>
+          <h1 className="font-serif text-2xl font-bold text-primary md:text-3xl">Gestión de Blogs</h1>
+          <p className="text-sm text-muted-foreground md:text-base">Administre los artículos del blog</p>
         </div>
         <Link href="/admin/blogs/new">
-          <Button className="gap-2">
+          <Button className="gap-2 w-full sm:w-auto">
             <Plus className="h-4 w-4" />
             Nuevo Blog
           </Button>
@@ -63,31 +63,31 @@ export default async function AdminDashboardPage() {
         <div className="grid gap-4">
           {blogs.map((blog) => (
             <Card key={blog.id} className="transition-shadow hover:shadow-md">
-              <CardHeader>
-                <div className="flex items-start justify-between">
-                  <div className="flex-1 space-y-1">
-                    <CardTitle className="font-serif text-xl">{blog.title}</CardTitle>
-                    <CardDescription className="line-clamp-2">{blog.summary}</CardDescription>
-                    <div className="flex items-center gap-4 pt-2 text-xs text-muted-foreground">
+              <CardHeader className="p-4 md:p-6">
+                <div className="space-y-3">
+                  <div className="space-y-2">
+                    <CardTitle className="font-serif text-lg md:text-xl">{blog.title}</CardTitle>
+                    <CardDescription className="line-clamp-2 text-sm">{blog.summary}</CardDescription>
+                    <div className="flex flex-col gap-1 pt-1 text-xs text-muted-foreground sm:flex-row sm:items-center sm:gap-4">
                       <span className="flex items-center gap-1">
                         <Calendar className="h-3 w-3" />
                         {new Date(blog.createdAt).toLocaleDateString("es-AR")}
                       </span>
-                      <span>Slug: /{blog.slug}</span>
+                      <span className="truncate">Slug: /{blog.slug}</span>
                     </div>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <Link href={`/admin/blogs/${blog.id}/edit`}>
-                      <Button variant="outline" size="sm" className="gap-2 bg-transparent">
+                  <div className="flex flex-col gap-2 pt-2 sm:flex-row">
+                    <Link href={`/admin/blogs/${blog.id}/edit`} className="flex-1 sm:flex-none">
+                      <Button variant="outline" size="sm" className="w-full gap-2 bg-transparent sm:w-auto">
                         <Edit className="h-4 w-4" />
                         Editar
                       </Button>
                     </Link>
-                    <form action={`/admin/blogs/${blog.id}/delete`} method="post">
+                    <form action={`/admin/blogs/${blog.id}/delete`} method="post" className="flex-1 sm:flex-none">
                       <Button
                         variant="outline"
                         size="sm"
-                        className="gap-2 bg-transparent text-destructive hover:bg-destructive hover:text-destructive-foreground"
+                        className="w-full gap-2 bg-transparent text-destructive hover:bg-destructive hover:text-destructive-foreground sm:w-auto"
                       >
                         <Trash2 className="h-4 w-4" />
                         Eliminar

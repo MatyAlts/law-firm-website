@@ -5,10 +5,9 @@ import { GeistMono } from "geist/font/mono"
 import { Playfair_Display } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
 import "./globals.css"
-import { Navigation } from "@/components/navigation"
-import { Footer } from "@/components/footer"
 import { Suspense } from "react"
 import { PageTransition } from "@/components/page-transition"
+import { ConditionalLayout } from "@/components/conditional-layout"
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
@@ -32,9 +31,9 @@ export default function RootLayout({
     <html lang="es">
       <body className={`font-sans ${GeistSans.variable} ${GeistMono.variable} ${playfair.variable} antialiased`}>
         <Suspense fallback={<div>Cargando...</div>}>
-          <Navigation />
-          <PageTransition>{children}</PageTransition>
-          <Footer />
+          <ConditionalLayout>
+            <PageTransition>{children}</PageTransition>
+          </ConditionalLayout>
         </Suspense>
         <Analytics />
       </body>
