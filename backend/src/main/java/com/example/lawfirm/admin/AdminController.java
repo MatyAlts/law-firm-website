@@ -44,6 +44,28 @@ public class AdminController {
             return ResponseEntity.status(409).build();
         }
     }
+
+    @PostMapping("/change-password")
+    public ResponseEntity<?> changePassword(@RequestHeader(value = "Authorization", required = false) String authorization,
+                                           @Valid @RequestBody ChangePasswordRequest request) {
+        try {
+            String email = tokenGuard.extractEmailFromToken(authorization);
+            AdminUser admin = adminService.findByEmail(email);
+            
+            // Verify current password
+            if (!adminService.verifyPassword(admin, request.currentPassword())) {
+                return ResponseEntity.status(401).body("Contraseña actual incorrecta");
+            }
+            
+            // Update to new password
+            adminService.updatePassword(admin.getId(), request.newPassword());
+            return ResponseEntity.ok().body("{\"message\": \"Contraseña actualizada exitosamente\"}");
+        } catch (Exception ex) {
+            return ResponseEntity.status(500).body("Error al cambiar la contraseña");
+        }
+    }
 }
 
 record AdminRequest(@Email String email, @NotBlank String password, @NotBlank String role) {}
+
+record ChangePasswordRequest(@NotBlank String currentPassword, @NotBlank String newPassword) {}

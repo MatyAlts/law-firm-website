@@ -45,4 +45,8 @@ public class AdminService {
         adminUser.setPasswordHash(passwordEncoder.encode(password));
         adminUserRepository.save(adminUser);
     }
+
+    public boolean verifyPassword(AdminUser admin, String rawPassword) {
+        return passwordEncoder.matches(rawPassword, admin.getPasswordHash());
+    }
 }

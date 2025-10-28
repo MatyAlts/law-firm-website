@@ -38,6 +38,9 @@ services:
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
       SPRING_JPA_SHOW_SQL: false
       APP_CORS_ALLOWED_ORIGINS: ${FRONTEND_URL:-http://localhost}
+      INITIAL_ADMIN_EMAIL: ${INITIAL_ADMIN_EMAIL:-}
+      INITIAL_ADMIN_PASSWORD: ${INITIAL_ADMIN_PASSWORD:-}
+      INITIAL_ADMIN_ROLE: ${INITIAL_ADMIN_ROLE:-superadmin}
     networks:
       - law-firm-network
     healthcheck:

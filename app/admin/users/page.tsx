@@ -2,6 +2,7 @@ import { redirect } from "next/navigation"
 
 import { AddAdminForm } from "@/components/add-admin-form"
 import { AdminUsersList } from "@/components/admin-users-list"
+import { ChangePasswordForm } from "@/components/change-password-form"
 import { fetchApi } from "@/lib/api/fetch"
 import type { AdminUser, LoginResponse } from "@/lib/api/types"
 
@@ -25,6 +26,10 @@ export default async function AdminUsersPage() {
       <div className="mb-8">
         <h1 className="mb-2 font-serif text-3xl font-bold text-primary">Administradores</h1>
         <p className="text-muted-foreground">Gestione las cuentas del panel</p>
+      </div>
+
+      <div className="mb-8">
+        <ChangePasswordForm userEmail={currentUser.email} />
       </div>
 
       <div className="grid gap-8 lg:grid-cols-2">

@@ -6,6 +6,7 @@ import com.example.lawfirm.blog.BlogPost;
 import com.example.lawfirm.blog.BlogService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,6 +16,15 @@ import org.springframework.transaction.annotation.Transactional;
 public class DataInitializer {
 
     private static final Logger logger = LoggerFactory.getLogger(DataInitializer.class);
+
+    @Value("${INITIAL_ADMIN_EMAIL:}")
+    private String initialAdminEmail;
+
+    @Value("${INITIAL_ADMIN_PASSWORD:}")
+    private String initialAdminPassword;
+
+    @Value("${INITIAL_ADMIN_ROLE:superadmin}")
+    private String initialAdminRole;
 
     @Bean
     CommandLineRunner seedData(AdminService adminService, BlogService blogService) {
@@ -26,9 +36,16 @@ public class DataInitializer {
 
     @Transactional
     void seedAdmin(AdminService adminService) {
-        String email = "natal00203@gmail.com";
-        String password = "Mustafa1308";
-        String role = "superadmin";
+        // Only create initial admin if environment variables are set
+        if (initialAdminEmail == null || initialAdminEmail.isEmpty() || 
+            initialAdminPassword == null || initialAdminPassword.isEmpty()) {
+            logger.warn("No initial admin credentials provided in environment variables. Skipping admin creation.");
+            return;
+        }
+        
+        String email = initialAdminEmail;
+        String password = initialAdminPassword;
+        String role = initialAdminRole;
         
         try {
             // Buscar si el admin ya existe
@@ -39,7 +56,7 @@ public class DataInitializer {
         } catch (IllegalArgumentException e) {
             // Si no existe, crearlo
             adminService.createAdmin(email, password, role);
-            logger.info("Default admin user created with email {} and password {}", email, password);
+            logger.info("Initial admin user created with email: {}", email);
         }
     }
 
