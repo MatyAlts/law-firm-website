@@ -9,7 +9,7 @@ export default function HomePage() {
   const practiceAreas = [
     {
       title: "Derecho de Familia",
-      description: "Asesoramiento integral en cuestiones familiares, custodia, régimen de visitas y alimentos.",
+      description: "Asesoramiento integral en cuestiones familiares, cuidado personal, régimen de comunicación y alimentos.",
       icon: Heart,
     },
     {
@@ -29,7 +29,7 @@ export default function HomePage() {
     },
     {
       title: "Daños y Perjuicios",
-      description: "Reclamos por daños materiales, morales y lucro cesante.",
+      description: "Reclamos por daños materiales, daño moral y lucro cesante.",
       icon: Scale,
     },
   ]
