@@ -14,7 +14,7 @@ export async function POST(request: Request) {
     }
 
     const baseUrl = getApiBaseUrl()
-    const response = await fetch(`${baseUrl}/api/admin/change-password`, {
+    const response = await fetch(`${baseUrl}/api/admins/change-password`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
