@@ -1,0 +1,14 @@
+# robots.txt for Belmonte, Lucero Salafia Estudio Jurídico
+# https://www.belmontesalafia.com/robots.txt
+
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /api/
+Disallow: /setup-admin/
+
+# Sitemap location
+Sitemap: https://www.belmontesalafia.com/sitemap.xml
+
+# Crawl delay (optional)
+Crawl-delay: 1

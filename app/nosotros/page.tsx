@@ -2,6 +2,17 @@ import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import Image from "next/image"
 import ScrollReveal from "@/components/scroll-reveal"
+import type { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: "Sobre Nosotros",
+  description: "Conoce a nuestro equipo de abogados especializados en Mendoza. Compromiso, profesionalismo y experiencia en derecho de familia, civil y laboral.",
+  openGraph: {
+    title: "Sobre Nosotros | Belmonte, Lucero Salafia",
+    description: "Equipo de profesionales con amplia trayectoria en derecho de familia, civil y laboral en Mendoza.",
+    url: "https://www.belmontesalafia.com/nosotros",
+  },
+}
 
 export default function NosotrosPage() {
   return (

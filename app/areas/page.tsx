@@ -3,6 +3,18 @@ import { Scale, Users, Car, Heart, FileText, Briefcase, Home, Shield } from "luc
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { ScrollReveal } from "@/components/scroll-reveal"
+import type { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: "Áreas de Práctica Legal",
+  description: "Servicios legales especializados: derecho de familia, divorcios, sucesiones, accidentes de tránsito, daños y perjuicios, derecho laboral y civil en Mendoza.",
+  keywords: ["derecho de familia Mendoza", "divorcios Mendoza", "sucesiones Mendoza", "accidentes de tránsito", "derecho laboral", "abogados Mendoza"],
+  openGraph: {
+    title: "Áreas de Práctica | Belmonte, Lucero Salafia",
+    description: "Asesoramiento legal en familia, divorcios, sucesiones, accidentes, daños, derecho laboral y civil.",
+    url: "https://www.belmontesalafia.com/areas",
+  },
+}
 
 export default function AreasPage() {
   const practiceAreas = [

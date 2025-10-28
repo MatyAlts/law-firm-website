@@ -4,6 +4,17 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Scale, Users, Car, Heart, FileText } from "lucide-react"
 import { ScrollReveal } from "@/components/scroll-reveal"
 import { ParallaxHero } from "@/components/parallax-hero"
+import type { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: "Estudio Jurídico en Mendoza",
+  description: "Estudio jurídico especializado en derecho de familia, divorcios, sucesiones, accidentes de tránsito y daños en Mendoza, Argentina. Más de 10 años de experiencia.",
+  openGraph: {
+    title: "Belmonte, Lucero Salafia | Estudio Jurídico en Mendoza",
+    description: "Abogados especializados en derecho de familia, civil y laboral. Compromiso, ética y resultados.",
+    url: "https://www.belmontesalafia.com",
+  },
+}
 
 export default function HomePage() {
   const practiceAreas = [

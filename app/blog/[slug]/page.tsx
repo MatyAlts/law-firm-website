@@ -1,6 +1,7 @@
 import Link from "next/link"
 import { notFound } from "next/navigation"
 import { ArrowLeft, Calendar } from "lucide-react"
+import type { Metadata } from "next"
 
 import ScrollReveal from "@/components/scroll-reveal"
 import { Button } from "@/components/ui/button"
@@ -12,6 +13,39 @@ export const revalidate = 0
 interface Section {
   title: string
   content: string
+}
+
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params
+  
+  try {
+    const post = await fetchApi<BlogPost>(`/blogs/slug/${slug}`, { skipAuth: true })
+    
+    return {
+      title: post.title,
+      description: post.summary,
+      keywords: [post.title, "derecho", "abogados Mendoza", "blog jurídico", "legislación argentina"],
+      openGraph: {
+        title: post.title,
+        description: post.summary,
+        url: `https://www.belmontesalafia.com/blog/${post.slug}`,
+        type: "article",
+        publishedTime: post.createdAt,
+        modifiedTime: post.updatedAt || post.createdAt,
+        authors: ["Belmonte, Lucero Salafia"],
+      },
+      twitter: {
+        card: "summary_large_image",
+        title: post.title,
+        description: post.summary,
+      },
+    }
+  } catch (error) {
+    return {
+      title: "Artículo no encontrado",
+      description: "El artículo que buscas no está disponible",
+    }
+  }
 }
 
 export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {

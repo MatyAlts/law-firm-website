@@ -1,10 +1,21 @@
 import Link from "next/link"
 import { Calendar } from "lucide-react"
+import type { Metadata } from "next"
 
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { fetchApi } from "@/lib/api/fetch"
 import type { BlogPost } from "@/lib/api/types"
+
+export const metadata: Metadata = {
+  title: "Blog Jurídico",
+  description: "Artículos, análisis de jurisprudencia y novedades del derecho argentino. Actualidad legal en derecho de familia, civil y laboral.",
+  openGraph: {
+    title: "Blog Jurídico | Belmonte, Lucero Salafia",
+    description: "Análisis legal, jurisprudencia y novedades del derecho en Argentina.",
+    url: "https://www.belmontesalafia.com/blog",
+  },
+}
 
 export const revalidate = 0
 

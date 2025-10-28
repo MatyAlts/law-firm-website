@@ -1,0 +1,106 @@
+{
+  "@context": "https://schema.org",
+  "@type": "LegalService",
+  "name": "Belmonte, Lucero Salafia",
+  "image": "https://www.belmontesalafia.com/images/colegio-abogados-logo.svg",
+  "@id": "https://www.belmontesalafia.com",
+  "url": "https://www.belmontesalafia.com",
+  "telephone": ["+54 261 207 1333", "+54 261 271 2200"],
+  "priceRange": "$$",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Colon 165 4° Piso Oficina A",
+    "addressLocality": "Mendoza",
+    "addressRegion": "Mendoza",
+    "postalCode": "5500",
+    "addressCountry": "AR"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": -32.8895,
+    "longitude": -68.8458
+  },
+  "openingHoursSpecification": [
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": [
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday"
+      ],
+      "opens": "09:00",
+      "closes": "20:00"
+    }
+  ],
+  "sameAs": [],
+  "areaServed": {
+    "@type": "City",
+    "name": "Mendoza"
+  },
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "5",
+    "reviewCount": "1"
+  },
+  "description": "Estudio jurídico especializado en derecho de familia, civil y laboral en Mendoza, Argentina. Compromiso, ética y resultados.",
+  "email": "natal00203@gmail.com",
+  "founder": {
+    "@type": "Person",
+    "name": "Belmonte, Lucero Salafia"
+  },
+  "slogan": "Compromiso, ética y resultados",
+  "knowsAbout": [
+    "Derecho de Familia",
+    "Divorcios",
+    "Sucesiones",
+    "Accidentes de Tránsito",
+    "Daños y Perjuicios",
+    "Derecho Laboral",
+    "Derecho Civil",
+    "Defensa del Consumidor"
+  ],
+  "makesOffer": [
+    {
+      "@type": "Offer",
+      "itemOffered": {
+        "@type": "Service",
+        "name": "Asesoramiento en Derecho de Familia",
+        "description": "Custodia, régimen de visitas, alimentos, violencia familiar"
+      }
+    },
+    {
+      "@type": "Offer",
+      "itemOffered": {
+        "@type": "Service",
+        "name": "Divorcios",
+        "description": "Divorcios contenciosos y de común acuerdo, liquidación de sociedad conyugal"
+      }
+    },
+    {
+      "@type": "Offer",
+      "itemOffered": {
+        "@type": "Service",
+        "name": "Sucesiones",
+        "description": "Tramitación de sucesiones, testamentos y planificación patrimonial"
+      }
+    },
+    {
+      "@type": "Offer",
+      "itemOffered": {
+        "@type": "Service",
+        "name": "Accidentes de Tránsito",
+        "description": "Defensa de víctimas y reclamos a aseguradoras"
+      }
+    },
+    {
+      "@type": "Offer",
+      "itemOffered": {
+        "@type": "Service",
+        "name": "Derecho Laboral",
+        "description": "Despidos, accidentes laborales, enfermedades profesionales"
+      }
+    }
+  ]
+}
