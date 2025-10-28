@@ -24,13 +24,14 @@ COPY . .
 # Variables de entorno para build
 ENV NEXT_TELEMETRY_DISABLED=1
 ENV NODE_ENV=production
+ENV DOCKER_BUILD=true
 
-# Build de Next.js con variable de entorno para standalone
+# Build de Next.js (standalone activado por DOCKER_BUILD=true)
 RUN \
-  if [ -f pnpm-lock.yaml ]; then DOCKER_BUILD=true corepack enable pnpm && pnpm run build; \
-  elif [ -f package-lock.json ]; then DOCKER_BUILD=true npm run build; \
-  elif [ -f yarn.lock ]; then DOCKER_BUILD=true yarn build; \
-  else DOCKER_BUILD=true npm run build; \
+  if [ -f pnpm-lock.yaml ]; then corepack enable pnpm && pnpm run build; \
+  elif [ -f package-lock.json ]; then npm run build; \
+  elif [ -f yarn.lock ]; then yarn build; \
+  else npm run build; \
   fi
 
 # Imagen de producción
@@ -43,8 +44,14 @@ ENV NEXT_TELEMETRY_DISABLED=1
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 
-# Copiar archivos necesarios
+# Copiar public folder
 COPY --from=builder /app/public ./public
+
+# Crear directorio .next y ajustar permisos
+RUN mkdir .next
+RUN chown nextjs:nodejs .next
+
+# Copiar standalone output (optimizado)
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
