@@ -1,6 +1,7 @@
 package com.example.lawfirm.config;
 
 import com.example.lawfirm.admin.AdminService;
+import com.example.lawfirm.admin.AdminUser;
 import com.example.lawfirm.blog.BlogPost;
 import com.example.lawfirm.blog.BlogService;
 import org.slf4j.Logger;
@@ -25,9 +26,20 @@ public class DataInitializer {
 
     @Transactional
     void seedAdmin(AdminService adminService) {
-        if (adminService.listAdmins().isEmpty()) {
-            adminService.createAdmin("natal00203@gmail.com", "Mustafa1308", "superadmin");
-            logger.info("Default admin user created with email natal00203@gmail.com and password Mustafa1308");
+        String email = "natal00203@gmail.com";
+        String password = "Mustafa1308";
+        String role = "superadmin";
+        
+        try {
+            // Buscar si el admin ya existe
+            AdminUser existingAdmin = adminService.findByEmail(email);
+            // Si existe, actualizar la contraseña
+            adminService.updatePassword(existingAdmin.getId(), password);
+            logger.info("Updated password for existing admin user: {}", email);
+        } catch (IllegalArgumentException e) {
+            // Si no existe, crearlo
+            adminService.createAdmin(email, password, role);
+            logger.info("Default admin user created with email {} and password {}", email, password);
         }
     }
 
