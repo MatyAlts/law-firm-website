@@ -75,25 +75,26 @@ export function ChangePasswordForm({ userEmail }: ChangePasswordFormProps) {
 
   return (
     <Card>
-      <CardHeader>
-        <CardTitle>Cambiar Contraseña</CardTitle>
-        <CardDescription>Actualiza la contraseña de tu cuenta: {userEmail}</CardDescription>
+      <CardHeader className="p-4 md:p-6">
+        <CardTitle className="text-lg md:text-xl">Cambiar Contraseña</CardTitle>
+        <CardDescription className="text-sm">Actualiza la contraseña de tu cuenta: {userEmail}</CardDescription>
       </CardHeader>
-      <CardContent>
+      <CardContent className="p-4 md:p-6 pt-0 md:pt-0">
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="currentPassword">Contraseña Actual</Label>
+            <Label htmlFor="currentPassword" className="text-sm md:text-base">Contraseña Actual</Label>
             <Input
               id="currentPassword"
               type="password"
               value={formData.currentPassword}
               onChange={(e) => setFormData({ ...formData, currentPassword: e.target.value })}
               required
+              className="text-sm md:text-base"
             />
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="newPassword">Nueva Contraseña</Label>
+            <Label htmlFor="newPassword" className="text-sm md:text-base">Nueva Contraseña</Label>
             <Input
               id="newPassword"
               type="password"
@@ -101,11 +102,12 @@ export function ChangePasswordForm({ userEmail }: ChangePasswordFormProps) {
               onChange={(e) => setFormData({ ...formData, newPassword: e.target.value })}
               required
               minLength={8}
+              className="text-sm md:text-base"
             />
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="confirmPassword">Confirmar Nueva Contraseña</Label>
+            <Label htmlFor="confirmPassword" className="text-sm md:text-base">Confirmar Nueva Contraseña</Label>
             <Input
               id="confirmPassword"
               type="password"
@@ -113,14 +115,15 @@ export function ChangePasswordForm({ userEmail }: ChangePasswordFormProps) {
               onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
               required
               minLength={8}
+              className="text-sm md:text-base"
             />
           </div>
 
-          {error && <div className="rounded-lg bg-destructive/10 p-3 text-sm text-destructive">{error}</div>}
+          {error && <div className="rounded-lg bg-destructive/10 p-3 text-xs md:text-sm text-destructive">{error}</div>}
 
-          {success && <div className="rounded-lg bg-green-500/10 p-3 text-sm text-green-600">{success}</div>}
+          {success && <div className="rounded-lg bg-green-500/10 p-3 text-xs md:text-sm text-green-600">{success}</div>}
 
-          <Button type="submit" className="w-full" disabled={isLoading}>
+          <Button type="submit" className="w-full text-sm md:text-base" disabled={isLoading}>
             {isLoading ? "Actualizando..." : "Cambiar Contraseña"}
           </Button>
         </form>

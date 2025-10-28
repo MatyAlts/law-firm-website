@@ -64,21 +64,22 @@ export function AddAdminForm({ currentUserRole }: AddAdminFormProps) {
 
   return (
     <Card>
-      <CardContent className="pt-6">
+      <CardContent className="p-4 md:p-6 pt-4 md:pt-6">
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="email">Email</Label>
+            <Label htmlFor="email" className="text-sm md:text-base">Email</Label>
             <Input
               id="email"
               type="email"
               value={formData.email}
               onChange={(e) => setFormData({ ...formData, email: e.target.value })}
               required
+              className="text-sm md:text-base"
             />
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="password">Password</Label>
+            <Label htmlFor="password" className="text-sm md:text-base">Password</Label>
             <Input
               id="password"
               type="password"
@@ -86,13 +87,14 @@ export function AddAdminForm({ currentUserRole }: AddAdminFormProps) {
               onChange={(e) => setFormData({ ...formData, password: e.target.value })}
               required
               minLength={8}
+              className="text-sm md:text-base"
             />
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="role">Role</Label>
+            <Label htmlFor="role" className="text-sm md:text-base">Role</Label>
             <Select value={formData.role} onValueChange={(value) => setFormData({ ...formData, role: value })}>
-              <SelectTrigger>
+              <SelectTrigger className="text-sm md:text-base">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
@@ -106,11 +108,11 @@ export function AddAdminForm({ currentUserRole }: AddAdminFormProps) {
             </p>
           </div>
 
-          {error && <div className="rounded-lg bg-destructive/10 p-3 text-sm text-destructive">{error}</div>}
+          {error && <div className="rounded-lg bg-destructive/10 p-3 text-xs md:text-sm text-destructive">{error}</div>}
 
-          {success && <div className="rounded-lg bg-green-500/10 p-3 text-sm text-green-600">{success}</div>}
+          {success && <div className="rounded-lg bg-green-500/10 p-3 text-xs md:text-sm text-green-600">{success}</div>}
 
-          <Button type="submit" className="w-full" disabled={isLoading}>
+          <Button type="submit" className="w-full text-sm md:text-base" disabled={isLoading}>
             {isLoading ? "Creating..." : "Create Admin User"}
           </Button>
         </form>

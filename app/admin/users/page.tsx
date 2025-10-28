@@ -22,25 +22,28 @@ export default async function AdminUsersPage() {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="mb-8">
-        <h1 className="mb-2 font-serif text-3xl font-bold text-primary">Administradores</h1>
-        <p className="text-muted-foreground">Gestione las cuentas del panel</p>
+    <div className="space-y-6 md:space-y-8">
+      <div>
+        <h1 className="mb-2 font-serif text-2xl md:text-3xl font-bold text-primary">Administradores</h1>
+        <p className="text-sm md:text-base text-muted-foreground">Gestione las cuentas del panel</p>
       </div>
 
-      <div className="mb-8">
-        <ChangePasswordForm userEmail={currentUser.email} />
-      </div>
-
-      <div className="grid gap-8 lg:grid-cols-2">
+      <div className="space-y-6 md:space-y-8">
         <div>
-          <h2 className="mb-4 font-serif text-xl font-semibold">Agregar Nuevo Admin</h2>
-          <AddAdminForm currentUserRole={currentUser.role} />
+          <h2 className="mb-4 font-serif text-lg md:text-xl font-semibold">Cambiar Contraseña</h2>
+          <ChangePasswordForm userEmail={currentUser.email} />
         </div>
 
-        <div>
-          <h2 className="mb-4 font-serif text-xl font-semibold">Admins Existentes</h2>
-          <AdminUsersList admins={admins} currentUserEmail={currentUser.email} />
+        <div className="grid gap-6 md:gap-8 lg:grid-cols-2">
+          <div>
+            <h2 className="mb-4 font-serif text-lg md:text-xl font-semibold">Agregar Nuevo Admin</h2>
+            <AddAdminForm currentUserRole={currentUser.role} />
+          </div>
+
+          <div>
+            <h2 className="mb-4 font-serif text-lg md:text-xl font-semibold">Admins Existentes</h2>
+            <AdminUsersList admins={admins} currentUserEmail={currentUser.email} />
+          </div>
         </div>
       </div>
     </div>

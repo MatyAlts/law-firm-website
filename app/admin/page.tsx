@@ -1,6 +1,6 @@
 import Link from "next/link"
 import { redirect } from "next/navigation"
-import { Plus, Calendar, Edit, Trash2, FileText } from "lucide-react"
+import { Plus, Calendar, Edit, Trash2, FileText, Users, Settings } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
@@ -22,6 +22,58 @@ export default async function AdminDashboardPage() {
 
   return (
     <div className="space-y-6 md:space-y-8">
+      {/* Quick Actions */}
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <Link href="/admin/blogs/new" className="group">
+          <Card className="transition-all hover:shadow-md hover:border-primary/50">
+            <CardHeader className="p-4 md:p-6">
+              <div className="flex items-center gap-3">
+                <div className="rounded-lg bg-primary/10 p-2 group-hover:bg-primary/20 transition-colors">
+                  <Plus className="h-5 w-5 text-primary" />
+                </div>
+                <div>
+                  <CardTitle className="text-base md:text-lg">Nuevo Blog</CardTitle>
+                  <CardDescription className="text-xs md:text-sm">Crear artículo</CardDescription>
+                </div>
+              </div>
+            </CardHeader>
+          </Card>
+        </Link>
+
+        <Link href="/admin/users" className="group">
+          <Card className="transition-all hover:shadow-md hover:border-primary/50">
+            <CardHeader className="p-4 md:p-6">
+              <div className="flex items-center gap-3">
+                <div className="rounded-lg bg-primary/10 p-2 group-hover:bg-primary/20 transition-colors">
+                  <Users className="h-5 w-5 text-primary" />
+                </div>
+                <div>
+                  <CardTitle className="text-base md:text-lg">Usuarios</CardTitle>
+                  <CardDescription className="text-xs md:text-sm">Gestionar admins</CardDescription>
+                </div>
+              </div>
+            </CardHeader>
+          </Card>
+        </Link>
+
+        <Link href="/" className="group sm:col-span-2 lg:col-span-1">
+          <Card className="transition-all hover:shadow-md hover:border-primary/50">
+            <CardHeader className="p-4 md:p-6">
+              <div className="flex items-center gap-3">
+                <div className="rounded-lg bg-primary/10 p-2 group-hover:bg-primary/20 transition-colors">
+                  <FileText className="h-5 w-5 text-primary" />
+                </div>
+                <div>
+                  <CardTitle className="text-base md:text-lg">Ver Sitio</CardTitle>
+                  <CardDescription className="text-xs md:text-sm">Vista pública</CardDescription>
+                </div>
+              </div>
+            </CardHeader>
+          </Card>
+        </Link>
+      </div>
+
+      {/* Blog Management */}
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h1 className="font-serif text-2xl font-bold text-primary md:text-3xl">Gestión de Blogs</h1>

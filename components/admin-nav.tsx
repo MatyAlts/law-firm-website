@@ -2,7 +2,7 @@
 
 import React, { useState } from "react"
 import Link from "next/link"
-import { Scale, FileText, LogOut, Home, Menu, X } from "lucide-react"
+import { Scale, FileText, LogOut, Home, Menu, X, Users, Settings } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
 export function AdminNavClient({ userEmail }: { userEmail: string }) {
@@ -20,17 +20,23 @@ export function AdminNavClient({ userEmail }: { userEmail: string }) {
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-4">
+          <div className="hidden md:flex items-center gap-2 lg:gap-4">
             <Link href="/admin">
               <Button variant="ghost" size="sm" className="gap-2">
                 <FileText className="h-4 w-4" />
-                Blogs
+                <span className="hidden lg:inline">Blogs</span>
+              </Button>
+            </Link>
+            <Link href="/admin/users">
+              <Button variant="ghost" size="sm" className="gap-2">
+                <Users className="h-4 w-4" />
+                <span className="hidden lg:inline">Usuarios</span>
               </Button>
             </Link>
             <Link href="/">
               <Button variant="ghost" size="sm" className="gap-2">
                 <Home className="h-4 w-4" />
-                Ver Sitio
+                <span className="hidden lg:inline">Ver Sitio</span>
               </Button>
             </Link>
             <span className="text-sm text-muted-foreground hidden lg:inline">{userEmail}</span>
@@ -62,6 +68,12 @@ export function AdminNavClient({ userEmail }: { userEmail: string }) {
               <Button variant="ghost" size="sm" className="w-full justify-start gap-2">
                 <FileText className="h-4 w-4" />
                 Blogs
+              </Button>
+            </Link>
+            <Link href="/admin/users" onClick={() => setIsMenuOpen(false)} className="block">
+              <Button variant="ghost" size="sm" className="w-full justify-start gap-2">
+                <Users className="h-4 w-4" />
+                Usuarios
               </Button>
             </Link>
             <Link href="/" onClick={() => setIsMenuOpen(false)} className="block">
