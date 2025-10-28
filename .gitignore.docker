@@ -1,0 +1,23 @@
+# Docker files
+Dockerfile*
+docker-compose*.yml
+.dockerignore
+
+# Deployment scripts
+deploy.sh
+deploy.bat
+backup.sh
+
+# Documentation
+README.deployment.md
+
+# Nginx config
+nginx/
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# Backups
+backups/

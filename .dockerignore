@@ -1,0 +1,41 @@
+# Node
+node_modules
+npm-debug.log
+.next
+out
+.pnpm-store
+
+# Git
+.git
+.gitignore
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# IDE
+.vscode
+.idea
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Testing
+coverage
+.nyc_output
+
+# Backend
+backend/target
+backend/.mvn
+backend/mvnw
+backend/mvnw.cmd
+
+# Misc
+*.log
+*.md
+README.md
