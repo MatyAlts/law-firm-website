@@ -4,32 +4,25 @@ import { Badge } from "@/components/ui/badge"
 interface AdminUser {
   id: string
   email: string
-  full_name: string
   role: string
-  status: string
-  created_at: string
-  last_login_at: string | null
+  createdAt: string
 }
 
 interface AdminUsersListProps {
   admins: AdminUser[]
-  currentUserId: string
+  currentUserEmail: string
 }
 
-export function AdminUsersList({ admins, currentUserId }: AdminUsersListProps) {
+export function AdminUsersList({ admins, currentUserEmail }: AdminUsersListProps) {
   const getRoleBadgeVariant = (role: string) => {
     switch (role) {
-      case "super_admin":
+      case "superadmin":
         return "default"
       case "admin":
         return "secondary"
       default:
         return "outline"
     }
-  }
-
-  const getStatusBadgeVariant = (status: string) => {
-    return status === "active" ? "default" : "destructive"
   }
 
   return (
@@ -47,17 +40,16 @@ export function AdminUsersList({ admins, currentUserId }: AdminUsersListProps) {
               <div className="flex items-start justify-between">
                 <div className="space-y-1">
                   <div className="flex items-center gap-2">
-                    <h3 className="font-semibold">{admin.full_name}</h3>
-                    {admin.id === currentUserId && (
+                    <h3 className="font-semibold">{admin.email}</h3>
+                    {admin.email === currentUserEmail && (
                       <Badge variant="outline" className="text-xs">
-                        You
+                        Tú
                       </Badge>
                     )}
                   </div>
-                  <p className="text-sm text-muted-foreground">{admin.email}</p>
                   <div className="flex gap-2 mt-2">
-                    <Badge variant={getRoleBadgeVariant(admin.role)}>{admin.role.replace("_", " ")}</Badge>
-                    <Badge variant={getStatusBadgeVariant(admin.status)}>{admin.status}</Badge>
+                    <Badge variant={getRoleBadgeVariant(admin.role)}>{admin.role}</Badge>
+                    <Badge variant="outline">Alta: {new Date(admin.createdAt).toLocaleDateString("es-AR")}</Badge>
                   </div>
                 </div>
               </div>

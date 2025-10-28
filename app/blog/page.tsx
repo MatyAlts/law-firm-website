@@ -1,65 +1,67 @@
 import Link from "next/link"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
 import { Calendar } from "lucide-react"
-import { createClient } from "@/lib/supabase/server"
 
-export const revalidate = 0 // Always fetch fresh data
+import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { fetchApi } from "@/lib/api/fetch"
+import type { BlogPost } from "@/lib/api/types"
+
+export const revalidate = 0
 
 export default async function BlogPage() {
-  const supabase = await createClient()
+  let blogPosts: BlogPost[] = []
+  let error: string | null = null
 
-  const { data: blogPosts, error } = await supabase.from("blogs").select("*").order("created_at", { ascending: false })
+  try {
+    blogPosts = await fetchApi<BlogPost[]>("/blogs", { skipAuth: true })
+  } catch (err) {
+    error = err instanceof Error ? err.message : "Error al cargar los artículos"
+  }
 
   return (
     <main className="py-16 sm:py-20">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <div className="max-w-3xl mx-auto text-center mb-12">
-          <h1 className="text-4xl sm:text-5xl font-serif font-bold text-foreground mb-6">Blog Jurídico</h1>
-          <p className="text-lg text-card-foreground leading-relaxed">
+        <div className="mx-auto mb-12 max-w-3xl text-center">
+          <h1 className="mb-6 text-4xl font-serif font-bold text-foreground sm:text-5xl">Blog Jurídico</h1>
+          <p className="text-lg leading-relaxed text-card-foreground">
             Artículos, análisis de jurisprudencia y novedades del derecho argentino
           </p>
         </div>
 
         {error && (
-          <div className="max-w-3xl mx-auto text-center mb-12">
-            <p className="text-destructive">Error al cargar los artículos del blog</p>
+          <div className="mx-auto mb-12 max-w-3xl text-center">
+            <p className="text-destructive">{error}</p>
           </div>
         )}
 
-        {blogPosts && blogPosts.length === 0 && (
-          <div className="max-w-3xl mx-auto text-center">
+        {!error && blogPosts.length === 0 && (
+          <div className="mx-auto max-w-3xl text-center">
             <p className="text-muted-foreground">No hay artículos publicados aún</p>
           </div>
         )}
 
-        {blogPosts && blogPosts.length > 0 && (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+        {!error && blogPosts.length > 0 && (
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 lg:gap-8">
             {blogPosts.map((post) => (
-              <Card key={post.id} className="border-border hover:shadow-lg transition-shadow bg-card flex flex-col">
+              <Card key={post.id} className="flex flex-col border-border bg-card transition-shadow hover:shadow-lg">
                 <CardHeader>
-                  <div className="flex items-center gap-2 text-sm text-muted-foreground mb-3">
-                    <Calendar className="w-4 h-4" />
+                  <div className="mb-3 flex items-center gap-2 text-sm text-muted-foreground">
+                    <Calendar className="h-4 w-4" />
                     <time>
-                      {new Date(post.created_at).toLocaleDateString("es-AR", {
+                      {new Date(post.createdAt).toLocaleDateString("es-AR", {
                         year: "numeric",
                         month: "long",
                         day: "numeric",
                       })}
                     </time>
                   </div>
-                  <CardTitle className="text-xl font-serif text-foreground leading-tight">{post.title}</CardTitle>
+                  <CardTitle className="text-xl font-serif leading-tight text-foreground">{post.title}</CardTitle>
                 </CardHeader>
-                <CardContent className="flex-1 flex flex-col">
-                  <CardDescription className="text-card-foreground leading-relaxed mb-4 flex-1">
-                    {post.description}
+                <CardContent className="flex flex-1 flex-col">
+                  <CardDescription className="mb-4 flex-1 leading-relaxed text-card-foreground">
+                    {post.summary}
                   </CardDescription>
-                  <Button
-                    asChild
-                    variant="link"
-                    className="text-foreground hover:text-primary p-0 h-auto justify-start"
-                  >
+                  <Button asChild variant="link" className="h-auto justify-start p-0 text-foreground hover:text-primary">
                     <Link href={`/blog/${post.slug}`}>Leer más →</Link>
                   </Button>
                 </CardContent>

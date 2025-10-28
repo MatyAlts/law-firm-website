@@ -23,7 +23,6 @@ export function AddAdminForm({ currentUserRole }: AddAdminFormProps) {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
-    full_name: "",
     role: "editor",
   })
 
@@ -50,7 +49,6 @@ export function AddAdminForm({ currentUserRole }: AddAdminFormProps) {
         setFormData({
           email: "",
           password: "",
-          full_name: "",
           role: "editor",
         })
         router.refresh()
@@ -68,17 +66,6 @@ export function AddAdminForm({ currentUserRole }: AddAdminFormProps) {
     <Card>
       <CardContent className="pt-6">
         <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="space-y-2">
-            <Label htmlFor="full_name">Full Name</Label>
-            <Input
-              id="full_name"
-              type="text"
-              value={formData.full_name}
-              onChange={(e) => setFormData({ ...formData, full_name: e.target.value })}
-              required
-            />
-          </div>
-
           <div className="space-y-2">
             <Label htmlFor="email">Email</Label>
             <Input
@@ -111,7 +98,7 @@ export function AddAdminForm({ currentUserRole }: AddAdminFormProps) {
               <SelectContent>
                 <SelectItem value="editor">Editor</SelectItem>
                 <SelectItem value="admin">Admin</SelectItem>
-                {currentUserRole === "super_admin" && <SelectItem value="super_admin">Super Admin</SelectItem>}
+                {currentUserRole === "superadmin" && <SelectItem value="superadmin">Super Admin</SelectItem>}
               </SelectContent>
             </Select>
             <p className="text-xs text-muted-foreground">
