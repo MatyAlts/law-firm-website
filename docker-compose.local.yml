@@ -1,0 +1,9 @@
+# Docker Compose Override para Desarrollo Local
+# Este archivo se usa automáticamente cuando ejecutas docker-compose localmente
+# EasyPanel lo ignora o puedes excluirlo
+
+services:
+  nginx:
+    ports:
+      - "${HTTP_PORT:-80}:80"
+      - "${HTTPS_PORT:-443}:443"
