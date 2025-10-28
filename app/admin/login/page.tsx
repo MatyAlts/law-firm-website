@@ -27,6 +27,7 @@ export default function AdminLoginPage() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
+        credentials: "include",
       })
 
       if (!response.ok) {
@@ -34,10 +35,16 @@ export default function AdminLoginPage() {
         throw new Error(data.error || "Error al iniciar sesión")
       }
 
-      // Esperar un momento para que las cookies se establezcan
-      await new Promise(resolve => setTimeout(resolve, 100))
+      const data = await response.json()
       
-      // Forzar recarga completa de la página
+      if (!data.success) {
+        throw new Error("Error al procesar la respuesta del servidor")
+      }
+
+      // Esperar para que las cookies se establezcan
+      await new Promise(resolve => setTimeout(resolve, 300))
+      
+      // Forzar recarga completa de la página al panel de admin
       window.location.href = "/admin"
     } catch (error: unknown) {
       setError(error instanceof Error ? error.message : "Error al iniciar sesión")

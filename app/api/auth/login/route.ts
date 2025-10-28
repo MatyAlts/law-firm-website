@@ -19,13 +19,18 @@ export async function POST(request: Request) {
 
   const data = (await response.json()) as LoginResponse
   const cookieStore = await cookies()
+  
   cookieStore.set("admin_token", data.token, {
     httpOnly: true,
     sameSite: "lax",
     secure: process.env.NODE_ENV === "production",
     path: "/",
-    maxAge: 60 * 60,
+    maxAge: 60 * 60, // 1 hour
   })
 
-  return NextResponse.json({ email: data.email, role: data.role })
+  return NextResponse.json({ 
+    email: data.email, 
+    role: data.role,
+    success: true 
+  })
 }
