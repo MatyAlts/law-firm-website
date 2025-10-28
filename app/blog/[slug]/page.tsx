@@ -14,11 +14,12 @@ interface Section {
   content: string
 }
 
-export default async function BlogPostPage({ params }: { params: { slug: string } }) {
+export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params
   let post: BlogPost | null = null
 
   try {
-    post = await fetchApi<BlogPost>(`/blogs/slug/${params.slug}`, { skipAuth: true })
+    post = await fetchApi<BlogPost>(`/blogs/slug/${slug}`, { skipAuth: true })
   } catch (error) {
     notFound()
   }

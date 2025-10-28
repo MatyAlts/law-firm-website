@@ -11,7 +11,7 @@ export async function fetchApi<T>(path: string, init?: (RequestInit & { skipAuth
   headers.set("Content-Type", "application/json")
 
   if (!skipAuth) {
-    const token = getAdminTokenFromCookies()
+    const token = await getAdminTokenFromCookies()
     if (token) {
       headers.set("Authorization", `Bearer ${token}`)
     }
