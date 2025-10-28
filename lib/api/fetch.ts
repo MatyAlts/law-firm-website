@@ -5,7 +5,9 @@ import { getAdminTokenFromCookies } from "./auth"
 
 export async function fetchApi<T>(path: string, init?: (RequestInit & { skipAuth?: boolean }) | undefined) {
   const baseUrl = getApiBaseUrl()
-  const url = `${baseUrl}${path}`
+  // Asegurarse de que el path empiece con /api
+  const apiPath = path.startsWith('/api') ? path : `/api${path}`
+  const url = `${baseUrl}${apiPath}`
   const { skipAuth, ...requestInit } = init ?? {}
   const headers = new Headers(requestInit.headers)
   headers.set("Content-Type", "application/json")
