@@ -5,21 +5,36 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   
   // Fetch blogs from API for dynamic URLs
   let blogUrls: MetadataRoute.Sitemap = []
-  try {
-    const response = await fetch(`${baseUrl}/api/blogs`, {
-      next: { revalidate: 3600 } // Revalidate every hour
-    })
-    if (response.ok) {
-      const blogs = await response.json()
-      blogUrls = blogs.map((blog: any) => ({
-        url: `${baseUrl}/blog/${blog.slug}`,
-        lastModified: new Date(blog.updatedAt || blog.createdAt),
-        changeFrequency: 'weekly' as const,
-        priority: 0.7,
-      }))
+  
+  // Skip API call during Docker build to avoid timeout
+  const isDockerBuild = process.env.DOCKER_BUILD === 'true'
+  
+  if (!isDockerBuild) {
+    try {
+      // Add timeout to prevent hanging during build
+      const controller = new AbortController()
+      const timeoutId = setTimeout(() => controller.abort(), 5000) // 5 second timeout
+      
+      const response = await fetch(`${baseUrl}/api/blogs`, {
+        next: { revalidate: 3600 }, // Revalidate every hour
+        signal: controller.signal
+      })
+      
+      clearTimeout(timeoutId)
+      
+      if (response.ok) {
+        const blogs = await response.json()
+        blogUrls = blogs.map((blog: any) => ({
+          url: `${baseUrl}/blog/${blog.slug}`,
+          lastModified: new Date(blog.updatedAt || blog.createdAt),
+          changeFrequency: 'weekly' as const,
+          priority: 0.7,
+        }))
+      }
+    } catch (error) {
+      console.error('Error fetching blogs for sitemap:', error)
+      // Sitemap will be generated with static pages only
     }
-  } catch (error) {
-    console.error('Error fetching blogs for sitemap:', error)
   }
 
   return [
